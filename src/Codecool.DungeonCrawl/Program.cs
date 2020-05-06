@@ -80,6 +80,7 @@ namespace Codecool.DungeonCrawl
             stage.AddChild(_healthTextField);
         }
 
+        //dupa
           // inventory textfield
         private void DrawMap()
         {
