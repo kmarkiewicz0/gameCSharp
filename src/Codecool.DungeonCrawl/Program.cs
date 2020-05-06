@@ -67,11 +67,6 @@ namespace Codecool.DungeonCrawl
             _playerGfx = new Sprite("tiles.png", false, Tiles.PlayerTile);
             stage.AddChild(_playerGfx);
 
-            _itemGfx = new Sprite("tiles.png", false, Tiles.ItemTile);
-            _itemGfx.X = _map.Item.X * Tiles.TileWidth;
-            _itemGfx.Y = _map.Item.Y * Tiles.TileWidth;
-            stage.AddChild(_itemGfx);
-
             // health textField
             string healthDisplayText = "HP: " + _map.Player.Health.ToString();
             _healthTextField = new TextField(
