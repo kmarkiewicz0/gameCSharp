@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Codecool.DungeonCrawl.Logic;
 using Codecool.DungeonCrawl.Logic.Actors;
+using Codecool.DungeonCrawl.Logic.Items;
 using Perlin;
 using Perlin.Display;
 using SixLabors.Fonts;
@@ -20,7 +21,7 @@ namespace Codecool.DungeonCrawl
         private TextField _inventoryTextField;
         private Sprite _mapContainer;
         private Sprite _playerGfx;
-        private Sprite _itemGfx;
+        private Sprite _keyToDoorGfx;
 
         /// <summary>
         /// Entry point
@@ -57,6 +58,11 @@ namespace Codecool.DungeonCrawl
                 skeletonGfx.Y = skeleton.Y * Tiles.TileWidth;
                 stage.AddChild(skeletonGfx);
             }
+
+            _keyToDoorGfx = new Sprite("tiles.png", false, Tiles.KeyToDoorTile);
+            _keyToDoorGfx.X = _map.KeyToDoor.X * Tiles.TileWidth;
+            _keyToDoorGfx.Y = _map.KeyToDoor.Y * Tiles.TileWidth;
+            stage.AddChild(_keyToDoorGfx);
 
             _playerGfx = new Sprite("tiles.png", false, Tiles.PlayerTile);
             stage.AddChild(_playerGfx);

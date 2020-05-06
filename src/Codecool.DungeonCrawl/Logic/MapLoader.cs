@@ -2,6 +2,7 @@ using System.IO;
 using System;
 using System.Collections.Generic;
 using Codecool.DungeonCrawl.Logic.Actors;
+using Codecool.DungeonCrawl.Logic.Items;
 
 namespace Codecool.DungeonCrawl.Logic
 {
@@ -46,16 +47,23 @@ namespace Codecool.DungeonCrawl.Logic
                             case 's':
                                 cell.Type = CellType.Floor;
 
+                                skeleton = new Skeleton(cell);
+                                Console.Write("Skeleton health: ");
+                                Console.WriteLine(skeleton.Health);
+
                                 // TODO change this code to allow more than one enemy
                                 map.Skeletons.Add(new Skeleton(cell));
                                 break;
                             case '@':
                                 cell.Type = CellType.Floor;
                                 map.Player = new Player(cell);
+                                Console.Write("Player health: ");
+                                Console.Write(map.Player.Health);
                                 break;
-                            case 'i':
+                            case 'k':
                                 cell.Type = CellType.Floor;
-                                map.Item = new Item(cell);
+                                map.KeyToDoor = new KeyToDoor(cell);
+
                                 break;
                             default:
                                 throw new InvalidDataException($"Unrecognized character: '{line[x]}'");

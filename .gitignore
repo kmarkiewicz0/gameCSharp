@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/Codecool.DungeonCrawl
+/src/Codecool.DungeonCrawl/.vs/Codecool.DungeonCrawl
+/src/Codecool.DungeonCrawl/bin/Debug/netcoreapp3.0
+/src/Codecool.DungeonCrawl/obj/Debug/netcoreapp3.0
+/src/Codecool.DungeonCrawl/obj
+/src/Codecool.DungeonCrawl/Codecool.DungeonCrawl.sln

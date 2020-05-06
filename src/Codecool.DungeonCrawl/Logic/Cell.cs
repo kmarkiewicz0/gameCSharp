@@ -1,4 +1,5 @@
 using Codecool.DungeonCrawl.Logic.Actors;
+using Codecool.DungeonCrawl.Logic.Items;
 
 namespace Codecool.DungeonCrawl.Logic
 {
@@ -33,6 +34,8 @@ namespace Codecool.DungeonCrawl.Logic
         /// The actor on the cell, null of none.
         /// </summary>
         public Actor Actor;
+
+        public Item Item { get; internal set; }
 
         /// <summary>
         /// Returns a cell in the given distance

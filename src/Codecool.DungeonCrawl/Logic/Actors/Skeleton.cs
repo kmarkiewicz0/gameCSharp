@@ -1,3 +1,5 @@
+using Vulkan;
+
 namespace Codecool.DungeonCrawl.Logic.Actors
 {
     /// <summary>
@@ -12,6 +14,7 @@ namespace Codecool.DungeonCrawl.Logic.Actors
         public Skeleton(Cell cell)
             : base(cell)
         {
+            Health = 10;
         }
 
         /// <inheritdoc/>
