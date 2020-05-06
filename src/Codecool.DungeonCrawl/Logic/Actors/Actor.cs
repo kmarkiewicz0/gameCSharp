@@ -25,6 +25,7 @@ namespace Codecool.DungeonCrawl.Logic.Actors
         {
             Cell = cell;
             Cell.Actor = this;
+            Health = 5;
         }
 
         /// <summary>

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Codecool.DungeonCrawl.Logic;
 using Codecool.DungeonCrawl.Logic.Actors;
 using Perlin;
@@ -15,6 +17,7 @@ namespace Codecool.DungeonCrawl
     {
         private GameMap _map;
         private TextField _healthTextField;
+        private TextField _inventoryTextField;
         private Sprite _mapContainer;
         private Sprite _playerGfx;
         private Sprite _itemGfx;
@@ -40,17 +43,6 @@ namespace Codecool.DungeonCrawl
         {
             var stage = PerlinApp.Stage;
 
-            // health textField
-            _healthTextField = new TextField(
-                PerlinApp.FontRobotoMono.CreateFont(14),
-                _map.Player.Health.ToString(),
-                false);
-            _healthTextField.HorizontalAlign = HorizontalAlignment.Center;
-            _healthTextField.Width = 100;
-            _healthTextField.Height = 20;
-            _healthTextField.X = _map.Width * Tiles.TileWidth / 2 - 50;
-            stage.AddChild(_healthTextField);
-
             stage.EnterFrameEvent += StageOnEnterFrameEvent;
 
             _mapContainer = new Sprite();
@@ -66,11 +58,6 @@ namespace Codecool.DungeonCrawl
                 stage.AddChild(skeletonGfx);
             }
 
-            //var skeletonGfx = new Sprite("tiles.png", false, Tiles.SkeletonTile);
-            //skeletonGfx.X = _map.Skeleton.X * Tiles.TileWidth;
-            //skeletonGfx.Y = _map.Skeleton.Y * Tiles.TileWidth;
-            //stage.AddChild(skeletonGfx);
-
             _playerGfx = new Sprite("tiles.png", false, Tiles.PlayerTile);
             stage.AddChild(_playerGfx);
 
@@ -78,8 +65,21 @@ namespace Codecool.DungeonCrawl
             _itemGfx.X = _map.Item.X * Tiles.TileWidth;
             _itemGfx.Y = _map.Item.Y * Tiles.TileWidth;
             stage.AddChild(_itemGfx);
+
+            // health textField
+            string healthDisplayText = "HP: " + _map.Player.Health.ToString();
+            _healthTextField = new TextField(
+                PerlinApp.FontRobotoMono.CreateFont(14),
+                healthDisplayText,
+                false);
+            _healthTextField.HorizontalAlign = HorizontalAlignment.Right;
+            _healthTextField.Width = 100;
+            _healthTextField.Height = 20;
+            _healthTextField.X = _map.Width * Tiles.TileWidth - 100;
+            stage.AddChild(_healthTextField);
         }
 
+          // inventory textfield
         private void DrawMap()
         {
             _mapContainer.RemoveAllChildren();

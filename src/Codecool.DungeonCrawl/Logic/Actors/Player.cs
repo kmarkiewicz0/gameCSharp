@@ -1,3 +1,5 @@
+using System.Threading;
+
 namespace Codecool.DungeonCrawl.Logic.Actors
 {
     /// <summary>
