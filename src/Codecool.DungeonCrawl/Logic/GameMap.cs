@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System;
 using Codecool.DungeonCrawl.Logic.Actors;
+using Codecool.DungeonCrawl.Logic.Items;
 
 namespace Codecool.DungeonCrawl.Logic
 {
@@ -20,9 +21,10 @@ namespace Codecool.DungeonCrawl.Logic
         public List<Skeleton> Skeletons;
 
         /// <summary>
-        /// An item
+        /// The player
         /// </summary>
-        public Item Item;
+        public KeyToDoor KeyToDoor;
+
         private readonly Cell[,] _cells;
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using Codecool.DungeonCrawl.Logic;
 using Codecool.DungeonCrawl.Logic.Actors;
+using Codecool.DungeonCrawl.Logic.Items;
 using Perlin;
 using Perlin.Display;
 using SixLabors.Fonts;
@@ -17,7 +18,7 @@ namespace Codecool.DungeonCrawl
         private TextField _healthTextField;
         private Sprite _mapContainer;
         private Sprite _playerGfx;
-        private Sprite _itemGfx;
+        private Sprite _keyToDoorGfx;
 
         /// <summary>
         /// Entry point
@@ -66,18 +67,13 @@ namespace Codecool.DungeonCrawl
                 stage.AddChild(skeletonGfx);
             }
 
-            //var skeletonGfx = new Sprite("tiles.png", false, Tiles.SkeletonTile);
-            //skeletonGfx.X = _map.Skeleton.X * Tiles.TileWidth;
-            //skeletonGfx.Y = _map.Skeleton.Y * Tiles.TileWidth;
-            //stage.AddChild(skeletonGfx);
+            _keyToDoorGfx = new Sprite("tiles.png", false, Tiles.KeyToDoorTile);
+            _keyToDoorGfx.X = _map.KeyToDoor.X * Tiles.TileWidth;
+            _keyToDoorGfx.Y = _map.KeyToDoor.Y * Tiles.TileWidth;
+            stage.AddChild(_keyToDoorGfx);
 
             _playerGfx = new Sprite("tiles.png", false, Tiles.PlayerTile);
             stage.AddChild(_playerGfx);
-
-            _itemGfx = new Sprite("tiles.png", false, Tiles.ItemTile);
-            _itemGfx.X = _map.Item.X * Tiles.TileWidth;
-            _itemGfx.Y = _map.Item.Y * Tiles.TileWidth;
-            stage.AddChild(_itemGfx);
         }
 
         private void DrawMap()

@@ -2,6 +2,7 @@ using System.IO;
 using System;
 using System.Collections.Generic;
 using Codecool.DungeonCrawl.Logic.Actors;
+using Codecool.DungeonCrawl.Logic.Items;
 
 namespace Codecool.DungeonCrawl.Logic
 {
@@ -59,9 +60,10 @@ namespace Codecool.DungeonCrawl.Logic
                                 Console.Write("Player health: ");
                                 Console.Write(map.Player.Health);
                                 break;
-                            case 'i':
+                            case 'k':
                                 cell.Type = CellType.Floor;
-                                map.Item = new Item(cell);
+                                map.KeyToDoor = new KeyToDoor(cell);
+
                                 break;
                             default:
                                 throw new InvalidDataException($"Unrecognized character: '{line[x]}'");
