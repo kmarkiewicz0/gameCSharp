@@ -13,9 +13,9 @@ namespace Codecool.DungeonCrawl.Logic.Actors
         public Cell Cell { get; private set; }
 
         /// <summary>
-        /// Gets this actors health
+        /// Gets or sets this actors health
         /// </summary>
-        public int Health { get; private set; }
+        public int Health { get; protected set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Actor"/> class.

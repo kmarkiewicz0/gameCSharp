@@ -46,12 +46,18 @@ namespace Codecool.DungeonCrawl.Logic
                             case 's':
                                 cell.Type = CellType.Floor;
 
+                                skeleton = new Skeleton(cell);
+                                Console.Write("Skeleton health: ");
+                                Console.WriteLine(skeleton.Health);
+
                                 // TODO change this code to allow more than one enemy
                                 map.Skeletons.Add(new Skeleton(cell));
                                 break;
                             case '@':
                                 cell.Type = CellType.Floor;
                                 map.Player = new Player(cell);
+                                Console.Write("Player health: ");
+                                Console.Write(map.Player.Health);
                                 break;
                             case 'i':
                                 cell.Type = CellType.Floor;
