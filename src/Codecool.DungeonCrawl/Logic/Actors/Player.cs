@@ -1,4 +1,5 @@
 using System.Threading;
+using Codecool.DungeonCrawl.Logic.Items.Inventory;
 
 namespace Codecool.DungeonCrawl.Logic.Actors
 {
@@ -8,6 +9,11 @@ namespace Codecool.DungeonCrawl.Logic.Actors
     public class Player : Actor
     {
         /// <summary>
+        /// Gets inventory
+        /// </summary>
+        public Inventory Inventory { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Player"/> class.
         /// </summary>
         /// <param name="cell">The starting cell</param>
@@ -15,6 +21,7 @@ namespace Codecool.DungeonCrawl.Logic.Actors
             : base(cell)
         {
             Health = 100;
+            Inventory = new Inventory();
         }
 
         /// <inheritdoc/>

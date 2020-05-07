@@ -16,5 +16,10 @@
 
         /// <inheritdoc/>
         public override string Tilename => "keyToDoor";
+
+        /// <summary>
+        /// Gets or sets many keys in inventory
+        /// </summary>
+        public int Quantity { get; set; }
     }
 }
