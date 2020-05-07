@@ -20,6 +20,7 @@ namespace Codecool.DungeonCrawl
         private Sprite _mapContainer;
         private Sprite _playerGfx;
         private Sprite _keyToDoorGfx;
+        private Sprite _swordGfx;
         private Sprite _skeletonGfx;
         private List<Sprite> _skeletonsSpriteList;
 
@@ -64,6 +65,11 @@ namespace Codecool.DungeonCrawl
             _keyToDoorGfx.X = _map.KeyToDoor.X * Tiles.TileWidth;
             _keyToDoorGfx.Y = _map.KeyToDoor.Y * Tiles.TileWidth;
             stage.AddChild(_keyToDoorGfx);
+
+            _swordGfx = new Sprite("tiles.png", false, Tiles.Sword);
+            _swordGfx.X = _map.Sword.X * Tiles.TileWidth;
+            _swordGfx.Y = _map.Sword.Y * Tiles.TileWidth;
+            stage.AddChild(_swordGfx);
 
             _playerGfx = new Sprite("tiles.png", false, Tiles.PlayerTile);
             stage.AddChild(_playerGfx);

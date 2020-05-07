@@ -21,9 +21,14 @@ namespace Codecool.DungeonCrawl.Logic
         public List<Skeleton> Skeletons;
 
         /// <summary>
-        /// The player
+        /// Key to the door
         /// </summary>
         public KeyToDoor KeyToDoor;
+
+        /// <summary>
+        /// Sword
+        /// </summary>
+        public Sword Sword;
 
         private readonly Cell[,] _cells;
 
