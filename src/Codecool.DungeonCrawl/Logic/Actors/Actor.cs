@@ -11,7 +11,7 @@ namespace Codecool.DungeonCrawl.Logic.Actors
         /// <summary>
         /// Gets the cell where this actor is located
         /// </summary>
-        public Cell Cell { get; private set; }
+        public Cell Cell { get; set; }
 
         /// <summary>
         /// Gets or sets this actors health
@@ -33,7 +33,7 @@ namespace Codecool.DungeonCrawl.Logic.Actors
         /// </summary>
         /// <param name="dx">X amoount</param>
         /// <param name="dy">Y amount</param>
-        public void Move(int dx, int dy)
+        public virtual void Move(int dx, int dy)
         {
             Cell nextCell = Cell.GetNeighbor(dx, dy);
             if (nextCell.Tilename == "Floor")

@@ -1,3 +1,5 @@
+using System;
+
 namespace Codecool.DungeonCrawl.Logic.Actors
 {
     /// <summary>
@@ -9,6 +11,7 @@ namespace Codecool.DungeonCrawl.Logic.Actors
         /// Initializes a new instance of the <see cref="Player"/> class.
         /// </summary>
         /// <param name="cell">The starting cell</param>
+
         public Player(Cell cell)
             : base(cell)
         {
@@ -17,5 +20,24 @@ namespace Codecool.DungeonCrawl.Logic.Actors
 
         /// <inheritdoc/>
         public override string Tilename => "player";
+
+        /// <summary>
+        /// Moves this actor by the given amount
+        /// </summary>
+        /// <param name="dx">X amoount</param>
+        /// <param name="dy">Y amount</param>
+        public override void Move(int dx, int dy)
+        {
+            Cell nextCell = Cell.GetNeighbor(dx, dy);
+            if (nextCell.Tilename == "Floor")
+            {
+                if (nextCell.Actor == null)
+                {
+                    Cell.Actor = null;
+                    nextCell.Actor = this;
+                    Cell = nextCell;
+                }
+            }
+        }
     }
 }
