@@ -22,6 +22,8 @@ namespace Codecool.DungeonCrawl
         private Sprite _mapContainer;
         private Sprite _playerGfx;
         private Sprite _keyToDoorGfx;
+        private Sprite _skeletonGfx;
+        private List<Sprite> _skeletonsSpriteList;
 
         /// <summary>
         /// Entry point
@@ -50,13 +52,14 @@ namespace Codecool.DungeonCrawl
             stage.AddChild(_mapContainer);
             DrawMap();
 
-            Sprite skeletonGfx;
-            foreach (Skeleton skeleton in _map.Skeletons)
+            _skeletonsSpriteList = new List<Sprite>();
+            for (int i = 0; i < _map.Skeletons.Count; i++)
             {
-                skeletonGfx = new Sprite("tiles.png", false, Tiles.SkeletonTile);
-                skeletonGfx.X = skeleton.X * Tiles.TileWidth;
-                skeletonGfx.Y = skeleton.Y * Tiles.TileWidth;
-                stage.AddChild(skeletonGfx);
+                _skeletonGfx = new Sprite("tiles.png", false, Tiles.SkeletonTile);
+                _skeletonGfx.X = _map.Skeletons[i].X * Tiles.TileWidth;
+                _skeletonGfx.Y = _map.Skeletons[i].Y * Tiles.TileWidth;
+                _skeletonsSpriteList.Add(_skeletonGfx);
+                stage.AddChild(_skeletonGfx);
             }
 
             _keyToDoorGfx = new Sprite("tiles.png", false, Tiles.KeyToDoorTile);
@@ -80,8 +83,6 @@ namespace Codecool.DungeonCrawl
             stage.AddChild(_healthTextField);
         }
 
-        //dupa
-          // inventory textfield
         private void DrawMap()
         {
             _mapContainer.RemoveAllChildren();
@@ -104,30 +105,72 @@ namespace Codecool.DungeonCrawl
         // this gets called every frame
         private void StageOnEnterFrameEvent(DisplayObject target, float elapsedtimesecs)
         {
+            Random rnd = new Random();
+            int randomY, randomX;
+
             // process inputs
             if (KeyboardInput.IsKeyPressedThisFrame(Key.W) || KeyboardInput.IsKeyPressedThisFrame(Key.Up))
             {
                 _map.Player.Move(0, -1);
+                foreach (Skeleton skeleton in _map.Skeletons)
+                {
+                    randomY = rnd.Next(-1, 2);
+                    randomX = rnd.Next(-1, 2);
+                    skeleton.Move(randomX, randomY);
+                }
             }
 
             if (KeyboardInput.IsKeyPressedThisFrame(Key.S) || KeyboardInput.IsKeyPressedThisFrame(Key.Down))
             {
                 _map.Player.Move(0, 1);
+                foreach (Skeleton skeleton in _map.Skeletons)
+                {
+                    randomY = rnd.Next(-1, 2);
+                    randomX = rnd.Next(-1, 2);
+                    skeleton.Move(randomX, randomY);
+                }
             }
 
             if (KeyboardInput.IsKeyPressedThisFrame(Key.A) || KeyboardInput.IsKeyPressedThisFrame(Key.Left))
             {
                 _map.Player.Move(-1, 0);
+                foreach (Skeleton skeleton in _map.Skeletons)
+                {
+                    randomY = rnd.Next(-1, 2);
+                    randomX = rnd.Next(-1, 2);
+                    skeleton.Move(randomX, randomY);
+                }
             }
 
             if (KeyboardInput.IsKeyPressedThisFrame(Key.D) || KeyboardInput.IsKeyPressedThisFrame(Key.Right))
             {
                 _map.Player.Move(1, 0);
+                foreach (Skeleton skeleton in _map.Skeletons)
+                {
+                    randomY = rnd.Next(-1, 2);
+                    randomX = rnd.Next(-1, 2);
+                    skeleton.Move(randomX, randomY);
+                }
             }
 
             // render changes
             _playerGfx.X = _map.Player.X * Tiles.TileWidth;
             _playerGfx.Y = _map.Player.Y * Tiles.TileWidth;
+
+            int countSkeleton = 0;
+            foreach (Skeleton skeleton in _map.Skeletons)
+            {
+                _skeletonsSpriteList[countSkeleton].X = skeleton.X * Tiles.TileWidth;
+                _skeletonsSpriteList[countSkeleton].Y = skeleton.Y * Tiles.TileWidth;
+
+                if (skeleton.Health == 0)
+                {
+                    PerlinApp.Stage.RemoveChild(_skeletonsSpriteList[countSkeleton]);
+                    skeleton.Cell.Actor = null;
+                }
+
+                countSkeleton++;
+            }
         }
     }
 }

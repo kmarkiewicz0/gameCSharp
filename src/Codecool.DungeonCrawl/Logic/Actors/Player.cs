@@ -14,7 +14,7 @@ namespace Codecool.DungeonCrawl.Logic.Actors
         public Player(Cell cell)
             : base(cell)
         {
-            Health = 20;
+            Health = 100;
         }
 
         /// <inheritdoc/>
