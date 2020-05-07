@@ -44,17 +44,6 @@ namespace Codecool.DungeonCrawl
         {
             var stage = PerlinApp.Stage;
 
-            // health textField
-            _healthTextField = new TextField(
-                PerlinApp.FontRobotoMono.CreateFont(14),
-                _map.Player.Health.ToString(),
-                false);
-            _healthTextField.HorizontalAlign = HorizontalAlignment.Center;
-            _healthTextField.Width = 100;
-            _healthTextField.Height = 20;
-            _healthTextField.X = _map.Width * Tiles.TileWidth / 2 - 50;
-            stage.AddChild(_healthTextField);
-
             stage.EnterFrameEvent += StageOnEnterFrameEvent;
 
             _mapContainer = new Sprite();
@@ -78,7 +67,19 @@ namespace Codecool.DungeonCrawl
 
             _playerGfx = new Sprite("tiles.png", false, Tiles.PlayerTile);
             stage.AddChild(_playerGfx);
-        }
+
+            // health textField
+            string healthDisplayText = "HP: " + _map.Player.Health.ToString();
+            _healthTextField = new TextField(
+                PerlinApp.FontRobotoMono.CreateFont(14),
+                healthDisplayText,
+                false);
+            _healthTextField.HorizontalAlign = HorizontalAlignment.Right;
+            _healthTextField.Width = 100;
+            _healthTextField.Height = 20;
+            _healthTextField.X = _map.Width * Tiles.TileWidth - 100;
+            stage.AddChild(_healthTextField);
+    }
 
         private void DrawMap()
         {
