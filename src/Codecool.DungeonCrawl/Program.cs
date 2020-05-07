@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Codecool.DungeonCrawl.Logic;
 using Codecool.DungeonCrawl.Logic.Actors;
 using Codecool.DungeonCrawl.Logic.Items;
@@ -19,6 +20,8 @@ namespace Codecool.DungeonCrawl
         private Sprite _mapContainer;
         private Sprite _playerGfx;
         private Sprite _keyToDoorGfx;
+        private Sprite _skeletonGfx;
+        private List<Sprite> _skeletonsSpriteList;
 
         /// <summary>
         /// Entry point
@@ -58,13 +61,14 @@ namespace Codecool.DungeonCrawl
             stage.AddChild(_mapContainer);
             DrawMap();
 
-            Sprite skeletonGfx;
-            foreach (Skeleton skeleton in _map.Skeletons)
+            _skeletonsSpriteList = new List<Sprite>();
+            for (int i = 0; i < _map.Skeletons.Count; i++)
             {
-                skeletonGfx = new Sprite("tiles.png", false, Tiles.SkeletonTile);
-                skeletonGfx.X = skeleton.X * Tiles.TileWidth;
-                skeletonGfx.Y = skeleton.Y * Tiles.TileWidth;
-                stage.AddChild(skeletonGfx);
+                _skeletonGfx = new Sprite("tiles.png", false, Tiles.SkeletonTile);
+                _skeletonGfx.X = _map.Skeletons[i].X * Tiles.TileWidth;
+                _skeletonGfx.Y = _map.Skeletons[i].Y * Tiles.TileWidth;
+                _skeletonsSpriteList.Add(_skeletonGfx);
+                stage.AddChild(_skeletonGfx);
             }
 
             _keyToDoorGfx = new Sprite("tiles.png", false, Tiles.KeyToDoorTile);
@@ -122,6 +126,18 @@ namespace Codecool.DungeonCrawl
             // render changes
             _playerGfx.X = _map.Player.X * Tiles.TileWidth;
             _playerGfx.Y = _map.Player.Y * Tiles.TileWidth;
+
+            int countSkeleton = 0;
+            foreach (Skeleton skeleton in _map.Skeletons)
+            {
+                if (skeleton.Health == 0)
+                {
+                    PerlinApp.Stage.RemoveChild(_skeletonsSpriteList[countSkeleton]);
+                    skeleton.Cell.Actor = null;
+                }
+
+                countSkeleton++;
+            }
         }
     }
 }

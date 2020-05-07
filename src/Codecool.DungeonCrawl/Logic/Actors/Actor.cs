@@ -35,11 +35,19 @@ namespace Codecool.DungeonCrawl.Logic.Actors
         public void Move(int dx, int dy)
         {
             Cell nextCell = Cell.GetNeighbor(dx, dy);
-            if (nextCell.Tilename != "Wall" && nextCell.Actor == null)
+            if (nextCell.Tilename == "Floor")
             {
-                Cell.Actor = null;
-                nextCell.Actor = this;
-                Cell = nextCell;
+                if (nextCell.Actor == null)
+                {
+                    Cell.Actor = null;
+                    nextCell.Actor = this;
+                    Cell = nextCell;
+                }
+                else if (nextCell.Actor.Health != 0)
+                {
+                    nextCell.Actor.Health -= 5;
+                    Console.WriteLine(nextCell.Actor.Health);
+                }
             }
         }
 
