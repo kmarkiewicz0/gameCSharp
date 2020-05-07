@@ -43,11 +43,12 @@ namespace Codecool.DungeonCrawl.Logic.Actors
                     nextCell.Actor = this;
                     Cell = nextCell;
                 }
-                else if (nextCell.Actor.Health != 0)
-                {
-                    nextCell.Actor.Health -= 5;
-                    Console.WriteLine(nextCell.Actor.Health);
-                }
+
+                //else if (nextCell.Actor.Health != 0)
+                //{
+                //    nextCell.Actor.Health -= 5;
+                //    Console.WriteLine(nextCell.Actor.Health);
+                //}
             }
         }
 

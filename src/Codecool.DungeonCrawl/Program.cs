@@ -102,25 +102,52 @@ namespace Codecool.DungeonCrawl
         // this gets called every frame
         private void StageOnEnterFrameEvent(DisplayObject target, float elapsedtimesecs)
         {
+            Random rnd = new Random();
+            int randomY, randomX;
+
             // process inputs
             if (KeyboardInput.IsKeyPressedThisFrame(Key.W) || KeyboardInput.IsKeyPressedThisFrame(Key.Up))
             {
                 _map.Player.Move(0, -1);
+                foreach (Skeleton skeleton in _map.Skeletons)
+                {
+                    randomY = rnd.Next(-1, 2);
+                    randomX = rnd.Next(-1, 2);
+                    skeleton.Move(randomX, randomY);
+                }
             }
 
             if (KeyboardInput.IsKeyPressedThisFrame(Key.S) || KeyboardInput.IsKeyPressedThisFrame(Key.Down))
             {
                 _map.Player.Move(0, 1);
+                foreach (Skeleton skeleton in _map.Skeletons)
+                {
+                    randomY = rnd.Next(-1, 2);
+                    randomX = rnd.Next(-1, 2);
+                    skeleton.Move(randomX, randomY);
+                }
             }
 
             if (KeyboardInput.IsKeyPressedThisFrame(Key.A) || KeyboardInput.IsKeyPressedThisFrame(Key.Left))
             {
                 _map.Player.Move(-1, 0);
+                foreach (Skeleton skeleton in _map.Skeletons)
+                {
+                    randomY = rnd.Next(-1, 2);
+                    randomX = rnd.Next(-1, 2);
+                    skeleton.Move(randomX, randomY);
+                }
             }
 
             if (KeyboardInput.IsKeyPressedThisFrame(Key.D) || KeyboardInput.IsKeyPressedThisFrame(Key.Right))
             {
                 _map.Player.Move(1, 0);
+                foreach (Skeleton skeleton in _map.Skeletons)
+                {
+                    randomY = rnd.Next(-1, 2);
+                    randomX = rnd.Next(-1, 2);
+                    skeleton.Move(randomX, randomY);
+                }
             }
 
             // render changes
@@ -130,6 +157,9 @@ namespace Codecool.DungeonCrawl
             int countSkeleton = 0;
             foreach (Skeleton skeleton in _map.Skeletons)
             {
+                _skeletonsSpriteList[countSkeleton].X = skeleton.X * Tiles.TileWidth;
+                _skeletonsSpriteList[countSkeleton].Y = skeleton.Y * Tiles.TileWidth;
+
                 if (skeleton.Health == 0)
                 {
                     PerlinApp.Stage.RemoveChild(_skeletonsSpriteList[countSkeleton]);
