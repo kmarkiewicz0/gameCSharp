@@ -68,6 +68,10 @@ namespace Codecool.DungeonCrawl.Logic
                                 cell.Type = CellType.Floor;
                                 map.Sword = new Sword(cell);
                                 break;
+                            case 'd':
+                                cell.Type = CellType.Floor;
+                                map.Door = new Door(cell);
+                                break;
                             default:
                                 throw new InvalidDataException($"Unrecognized character: '{line[x]}'");
                         }

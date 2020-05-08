@@ -30,6 +30,11 @@ namespace Codecool.DungeonCrawl.Logic
         /// </summary>
         public Sword Sword;
 
+        /// <summary>
+        /// Door
+        /// </summary>
+        public Door Door;
+
         private readonly Cell[,] _cells;
 
         /// <summary>
