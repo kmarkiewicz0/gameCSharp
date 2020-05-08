@@ -9,7 +9,7 @@ namespace Codecool.DungeonCrawl.Logic.Actors
     public abstract class Actor : IDrawable
     {
         /// <summary>
-        /// Gets the cell where this actor is located
+        /// Gets or sets the cell where this actor is located
         /// </summary>
         public Cell Cell { get; set; }
 

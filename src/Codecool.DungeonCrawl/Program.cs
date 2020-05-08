@@ -25,6 +25,7 @@ namespace Codecool.DungeonCrawl
         private Sprite _keyToDoorGfx;
         private Sprite _swordGfx;
         private Sprite _skeletonGfx;
+        private Sprite _doorGfx;
         private List<Sprite> _skeletonsSpriteList;
 
         /// <summary>
@@ -72,10 +73,16 @@ namespace Codecool.DungeonCrawl
             stage.AddChild(_keyToDoorGfx);
 
             //Sword rendering
-            _swordGfx = new Sprite("tiles.png", false, Tiles.Sword);
+            _swordGfx = new Sprite("tiles.png", false, Tiles.SwordTile);
             _swordGfx.X = _map.Sword.X * Tiles.TileWidth;
             _swordGfx.Y = _map.Sword.Y * Tiles.TileWidth;
             stage.AddChild(_swordGfx);
+
+            //Door rendering
+            _doorGfx = new Sprite("tiles.png", false, Tiles.DoorTile);
+            _doorGfx.X = _map.Door.X * Tiles.TileWidth;
+            _doorGfx.Y = _map.Door.Y * Tiles.TileWidth;
+            stage.AddChild(_doorGfx);
 
             //Player rendering (first)
             _playerGfx = new Sprite("tiles.png", false, Tiles.PlayerTile);

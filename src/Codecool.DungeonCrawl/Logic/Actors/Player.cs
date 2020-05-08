@@ -29,7 +29,7 @@ namespace Codecool.DungeonCrawl.Logic.Actors
         public override string Tilename => "player";
 
         /// <summary>
-        /// Moves this actor by the given amount
+        /// Moves player by the given amount
         /// </summary>
         /// <param name="dx">X amoount</param>
         /// <param name="dy">Y amount</param>
