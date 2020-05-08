@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Codecool.DungeonCrawl.Logic;
 using Codecool.DungeonCrawl.Logic.Actors;
 using Codecool.DungeonCrawl.Logic.Items;
+using Codecool.DungeonCrawl.Logic.Items.Inventory;
 using Perlin;
 using Perlin.Display;
 using SixLabors.Fonts;
@@ -91,6 +92,21 @@ namespace Codecool.DungeonCrawl
             _healthTextField.Height = 20;
             _healthTextField.X = _map.Width * Tiles.TileWidth - 100;
             stage.AddChild(_healthTextField);
+
+            // inventory renter
+            int itemCounter = 1;
+            foreach (KeyValuePair<string, int> invItem in _map.Player.Inventory.InventoryDict)
+            {
+                string itemText = invItem.Key + ":" + invItem.Value.ToString();
+                _inventoryTextField = new TextField(PerlinApp.FontRobotoMono.CreateFont(14), itemText, false);
+                _inventoryTextField.HorizontalAlign = HorizontalAlignment.Right;
+                _inventoryTextField.Width = 100;
+                _inventoryTextField.Height = 20;
+                _inventoryTextField.Y = _map.Height * Tiles.TileWidth - 20 * itemCounter;
+                _inventoryTextField.X = _map.Width * Tiles.TileWidth - 100;
+                itemCounter++;
+                stage.AddChild(_inventoryTextField);
+            }
         }
 
         private void DrawMap()
@@ -175,12 +191,15 @@ namespace Codecool.DungeonCrawl
             if (_map.Player.X == _map.KeyToDoor.X && _map.Player.Y == _map.KeyToDoor.Y)
             {
                 //TODO: and if nacisnieto przycisk
+
                 PerlinApp.Stage.RemoveChild(_keyToDoorGfx);
             }
 
             if (_map.Player.X == _map.Sword.X && _map.Player.Y == _map.Sword.Y)
             {
                 //TODO: and if nacisnieto przycisk
+             //   _map.Player.Inventory.InventoryDict["swords"] += 1;
+             //   Console.WriteLine(_map.Player.Inventory.InventoryDict["swords"]);
                 PerlinApp.Stage.RemoveChild(_swordGfx);
             }
 
