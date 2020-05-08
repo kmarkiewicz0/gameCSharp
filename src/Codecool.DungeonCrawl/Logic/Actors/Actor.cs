@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography;
 
 namespace Codecool.DungeonCrawl.Logic.Actors
 {
@@ -10,7 +11,7 @@ namespace Codecool.DungeonCrawl.Logic.Actors
         /// <summary>
         /// Gets the cell where this actor is located
         /// </summary>
-        public Cell Cell { get; private set; }
+        public Cell Cell { get; set; }
 
         /// <summary>
         /// Gets or sets this actors health
@@ -33,7 +34,7 @@ namespace Codecool.DungeonCrawl.Logic.Actors
         /// </summary>
         /// <param name="dx">X amoount</param>
         /// <param name="dy">Y amount</param>
-        public void Move(int dx, int dy)
+        public virtual void Move(int dx, int dy)
         {
             Cell nextCell = Cell.GetNeighbor(dx, dy);
             if (nextCell.Tilename == "Floor")
@@ -44,12 +45,32 @@ namespace Codecool.DungeonCrawl.Logic.Actors
                     nextCell.Actor = this;
                     Cell = nextCell;
                 }
+            }
+        }
 
-                //else if (nextCell.Actor.Health != 0)
-                //{
-                //    nextCell.Actor.Health -= 5;
-                //    Console.WriteLine(nextCell.Actor.Health);
-                //}
+        /// <summary>
+        /// Deals damage to actors in same cell
+        /// </summary>
+        /// <param name="dx">X amount</param>
+        /// <param name="dy">Y amount</param>
+        public void Attack(int dx, int dy)
+        {
+            Cell nextCell = Cell.GetNeighbor(dx, dy);
+            if (nextCell.Actor != null)
+            {
+                nextCell.Actor.Health -= 5;
+                Console.WriteLine($"Player deals 5 damage to Skeleton. Health left" +
+                    $" {nextCell.Actor.Health}");
+                if (nextCell.Actor.Health != 0)
+                {
+                    Cell.Actor.Health -= 2;
+                    Console.WriteLine($"Skeleton deals 2 damage to Player. Health left" +
+                    $" {Cell.Actor.Health}");
+                }
+                else
+                {
+                    Console.WriteLine("Skeleton died");
+                }
             }
         }
 

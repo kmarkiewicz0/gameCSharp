@@ -3,7 +3,7 @@
     /// <summary>
     /// Actor is a base class for every entity in the dungeon.
     /// </summary>
-    public abstract class Item : IDrawable, ITakeable
+    public abstract class Item : IDrawable
     {
         /// <summary>
         /// Gets the cell where this actor is located
@@ -34,13 +34,5 @@
         /// Gets the name of this tile.
         /// </summary>
         public abstract string Tilename { get; }
-
-        /// <inheritdoc/>
-        public int AddToInventory()
-        {
-            int allItemsOfThisType = 0;
-            allItemsOfThisType += 1;
-            return allItemsOfThisType;
-        }
     }
 }

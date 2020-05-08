@@ -35,7 +35,7 @@ namespace Codecool.DungeonCrawl.Logic
         /// </summary>
         public Actor Actor;
 
-        public Item Item { get; internal set; }
+        public Item Item { get; set; }
 
         /// <summary>
         /// Returns a cell in the given distance

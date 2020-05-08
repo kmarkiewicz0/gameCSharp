@@ -22,6 +22,7 @@ namespace Codecool.DungeonCrawl
         private Sprite _mapContainer;
         private Sprite _playerGfx;
         private Sprite _keyToDoorGfx;
+        private Sprite _swordGfx;
         private Sprite _skeletonGfx;
         private List<Sprite> _skeletonsSpriteList;
 
@@ -52,6 +53,7 @@ namespace Codecool.DungeonCrawl
             stage.AddChild(_mapContainer);
             DrawMap();
 
+            // Skeletons rendering
             _skeletonsSpriteList = new List<Sprite>();
             for (int i = 0; i < _map.Skeletons.Count; i++)
             {
@@ -62,11 +64,19 @@ namespace Codecool.DungeonCrawl
                 stage.AddChild(_skeletonGfx);
             }
 
+            // Key rendering
             _keyToDoorGfx = new Sprite("tiles.png", false, Tiles.KeyToDoorTile);
             _keyToDoorGfx.X = _map.KeyToDoor.X * Tiles.TileWidth;
             _keyToDoorGfx.Y = _map.KeyToDoor.Y * Tiles.TileWidth;
             stage.AddChild(_keyToDoorGfx);
 
+            //Sword rendering
+            _swordGfx = new Sprite("tiles.png", false, Tiles.Sword);
+            _swordGfx.X = _map.Sword.X * Tiles.TileWidth;
+            _swordGfx.Y = _map.Sword.Y * Tiles.TileWidth;
+            stage.AddChild(_swordGfx);
+
+            //Player rendering (first)
             _playerGfx = new Sprite("tiles.png", false, Tiles.PlayerTile);
             stage.AddChild(_playerGfx);
 
@@ -112,6 +122,7 @@ namespace Codecool.DungeonCrawl
             if (KeyboardInput.IsKeyPressedThisFrame(Key.W) || KeyboardInput.IsKeyPressedThisFrame(Key.Up))
             {
                 _map.Player.Move(0, -1);
+                _map.Player.Attack(0, -1);
                 foreach (Skeleton skeleton in _map.Skeletons)
                 {
                     randomY = rnd.Next(-1, 2);
@@ -123,6 +134,7 @@ namespace Codecool.DungeonCrawl
             if (KeyboardInput.IsKeyPressedThisFrame(Key.S) || KeyboardInput.IsKeyPressedThisFrame(Key.Down))
             {
                 _map.Player.Move(0, 1);
+                _map.Player.Attack(0, 1);
                 foreach (Skeleton skeleton in _map.Skeletons)
                 {
                     randomY = rnd.Next(-1, 2);
@@ -134,6 +146,7 @@ namespace Codecool.DungeonCrawl
             if (KeyboardInput.IsKeyPressedThisFrame(Key.A) || KeyboardInput.IsKeyPressedThisFrame(Key.Left))
             {
                 _map.Player.Move(-1, 0);
+                _map.Player.Attack(-1, 0);
                 foreach (Skeleton skeleton in _map.Skeletons)
                 {
                     randomY = rnd.Next(-1, 2);
@@ -145,6 +158,7 @@ namespace Codecool.DungeonCrawl
             if (KeyboardInput.IsKeyPressedThisFrame(Key.D) || KeyboardInput.IsKeyPressedThisFrame(Key.Right))
             {
                 _map.Player.Move(1, 0);
+                _map.Player.Attack(1, 0);
                 foreach (Skeleton skeleton in _map.Skeletons)
                 {
                     randomY = rnd.Next(-1, 2);
@@ -156,6 +170,19 @@ namespace Codecool.DungeonCrawl
             // render changes
             _playerGfx.X = _map.Player.X * Tiles.TileWidth;
             _playerGfx.Y = _map.Player.Y * Tiles.TileWidth;
+            _healthTextField.Text = "HP: " + _map.Player.Health.ToString();
+
+            if (_map.Player.X == _map.KeyToDoor.X && _map.Player.Y == _map.KeyToDoor.Y)
+            {
+                //TODO: and if nacisnieto przycisk
+                PerlinApp.Stage.RemoveChild(_keyToDoorGfx);
+            }
+
+            if (_map.Player.X == _map.Sword.X && _map.Player.Y == _map.Sword.Y)
+            {
+                //TODO: and if nacisnieto przycisk
+                PerlinApp.Stage.RemoveChild(_swordGfx);
+            }
 
             int countSkeleton = 0;
             foreach (Skeleton skeleton in _map.Skeletons)
