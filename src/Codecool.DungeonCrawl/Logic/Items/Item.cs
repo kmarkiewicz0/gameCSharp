@@ -10,6 +10,9 @@
         /// </summary>
         public Cell Cell { get; private set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether gets or sets ....
+        /// </summary>
         public bool Used { get; set; }
 
         /// <summary>

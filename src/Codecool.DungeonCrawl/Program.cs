@@ -207,13 +207,14 @@ namespace Codecool.DungeonCrawl
                 PerlinApp.Stage.RemoveChild(_keyToDoorGfx);
             }
 
-            if (_map.Player.X == _map.Sword.X && _map.Player.Y == _map.Sword.Y)
+            if (_map.Player.X == _map.Sword.X && _map.Player.Y == _map.Sword.Y && _map.Sword.Cell.Item != null)
             {
                 PerlinApp.Stage.RemoveChild(_swordGfx);
 
                 // TODO: and if nacisnieto przycisk
                 _map.Player.Inventory.AddToInventory("swords");
                 Console.WriteLine(_map.Player.Inventory.InventoryDict["swords"]);
+                _map.Sword.PickUp();
 
                 InventoryRender();
             }
