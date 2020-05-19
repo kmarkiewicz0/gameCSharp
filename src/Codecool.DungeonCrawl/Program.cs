@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using Codecool.DungeonCrawl.Logic;
 using Codecool.DungeonCrawl.Logic.Actors;
@@ -100,7 +101,11 @@ namespace Codecool.DungeonCrawl
             _healthTextField.X = _map.Width * Tiles.TileWidth - 100;
             stage.AddChild(_healthTextField);
 
-            // inventory renter
+            InventoryRender();
+        }
+
+        private void InventoryRender()
+        {
             int itemCounter = 1;
             foreach (KeyValuePair<string, int> invItem in _map.Player.Inventory.InventoryDict)
             {
@@ -112,7 +117,7 @@ namespace Codecool.DungeonCrawl
                 _inventoryTextField.Y = _map.Height * Tiles.TileWidth - 20 * itemCounter;
                 _inventoryTextField.X = _map.Width * Tiles.TileWidth - 100;
                 itemCounter++;
-                stage.AddChild(_inventoryTextField);
+                PerlinApp.Stage.AddChild(_inventoryTextField);
             }
         }
 
@@ -204,10 +209,13 @@ namespace Codecool.DungeonCrawl
 
             if (_map.Player.X == _map.Sword.X && _map.Player.Y == _map.Sword.Y)
             {
-                //TODO: and if nacisnieto przycisk
-             //   _map.Player.Inventory.InventoryDict["swords"] += 1;
-             //   Console.WriteLine(_map.Player.Inventory.InventoryDict["swords"]);
                 PerlinApp.Stage.RemoveChild(_swordGfx);
+
+                // TODO: and if nacisnieto przycisk
+                _map.Player.Inventory.AddToInventory("swords");
+                Console.WriteLine(_map.Player.Inventory.InventoryDict["swords"]);
+
+                InventoryRender();
             }
 
             int countSkeleton = 0;
