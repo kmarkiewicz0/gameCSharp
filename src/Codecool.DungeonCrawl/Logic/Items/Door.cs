@@ -1,4 +1,6 @@
-﻿namespace Codecool.DungeonCrawl.Logic.Items
+﻿using System.Threading;
+
+namespace Codecool.DungeonCrawl.Logic.Items
 {
     /// <summary>
     /// Sample enemy

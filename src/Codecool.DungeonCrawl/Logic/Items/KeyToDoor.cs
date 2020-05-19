@@ -1,4 +1,6 @@
-﻿namespace Codecool.DungeonCrawl.Logic.Items
+﻿using Codecool.DungeonCrawl.Logic.Items.Inventory;
+
+namespace Codecool.DungeonCrawl.Logic.Items
 {
     /// <summary>
     /// Sample enemy

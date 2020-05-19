@@ -10,6 +10,8 @@
         /// </summary>
         public Cell Cell { get; private set; }
 
+        public bool Used { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Item"/> class.
         /// </summary>
