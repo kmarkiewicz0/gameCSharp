@@ -11,9 +11,9 @@ namespace Codecool.DungeonCrawl.Logic.Actors
     public class Player : Actor
     {
         /// <summary>
-        /// Gets inventory
+        /// Gets or sets inventory
         /// </summary>
-        public Inventory Inventory { get; }
+        public Inventory Inventory { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Player"/> class.

@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\OOP\\2 TW najnowsze\\gameCSharp\\src\\Codecool.DungeonCrawl\\Codecool.DungeonCrawl.csproj": {}
+    "C:\\Codecool\\OOP\\TW2\\01. ZEBRAZ_GAME\\gameCSharp\\src\\Codecool.DungeonCrawl\\Codecool.DungeonCrawl.csproj": {}
   },
   "projects": {
-    "D:\\OOP\\2 TW najnowsze\\gameCSharp\\src\\Codecool.DungeonCrawl\\Codecool.DungeonCrawl.csproj": {
+    "C:\\Codecool\\OOP\\TW2\\01. ZEBRAZ_GAME\\gameCSharp\\src\\Codecool.DungeonCrawl\\Codecool.DungeonCrawl.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\OOP\\2 TW najnowsze\\gameCSharp\\src\\Codecool.DungeonCrawl\\Codecool.DungeonCrawl.csproj",
+        "projectUniqueName": "C:\\Codecool\\OOP\\TW2\\01. ZEBRAZ_GAME\\gameCSharp\\src\\Codecool.DungeonCrawl\\Codecool.DungeonCrawl.csproj",
         "projectName": "Codecool.DungeonCrawl",
-        "projectPath": "D:\\OOP\\2 TW najnowsze\\gameCSharp\\src\\Codecool.DungeonCrawl\\Codecool.DungeonCrawl.csproj",
-        "packagesPath": "C:\\Users\\Anku\\.nuget\\packages\\",
-        "outputPath": "D:\\OOP\\2 TW najnowsze\\gameCSharp\\src\\Codecool.DungeonCrawl\\obj\\",
+        "projectPath": "C:\\Codecool\\OOP\\TW2\\01. ZEBRAZ_GAME\\gameCSharp\\src\\Codecool.DungeonCrawl\\Codecool.DungeonCrawl.csproj",
+        "packagesPath": "C:\\Users\\Iza\\.nuget\\packages\\",
+        "outputPath": "C:\\Codecool\\OOP\\TW2\\01. ZEBRAZ_GAME\\gameCSharp\\src\\Codecool.DungeonCrawl\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "D:\\OOP\\2 TW najnowsze\\gameCSharp\\src\\Codecool.DungeonCrawl\\NuGet.Config",
-          "C:\\Users\\Anku\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Codecool\\OOP\\TW2\\01. ZEBRAZ_GAME\\gameCSharp\\src\\Codecool.DungeonCrawl\\NuGet.Config",
+          "C:\\Users\\Iza\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],

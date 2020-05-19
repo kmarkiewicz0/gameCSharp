@@ -27,5 +27,14 @@ namespace Codecool.DungeonCrawl.Logic.Items.Inventory
 
             InventoryDict.Add("keys", 1);
         }
+
+        /// <summary>
+        /// Adds item to inventory
+        /// </summary>
+        /// <param name="item">name of item</param>
+        public void AddToInventory(string item)
+        {
+            InventoryDict[item] += 1;
+        }
     }
 }
