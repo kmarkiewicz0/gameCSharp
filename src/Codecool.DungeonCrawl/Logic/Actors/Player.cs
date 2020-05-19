@@ -1,4 +1,6 @@
+using System;
 using System.Threading;
+using Codecool.DungeonCrawl.Logic.Items;
 using Codecool.DungeonCrawl.Logic.Items.Inventory;
 
 namespace Codecool.DungeonCrawl.Logic.Actors
@@ -36,13 +38,30 @@ namespace Codecool.DungeonCrawl.Logic.Actors
         public override void Move(int dx, int dy)
         {
             Cell nextCell = Cell.GetNeighbor(dx, dy);
+
             if (nextCell.Tilename == "Floor")
             {
                 if (nextCell.Actor == null)
                 {
-                    Cell.Actor = null;
-                    nextCell.Actor = this;
-                    Cell = nextCell;
+                    if (nextCell.Item is Door)
+                    {
+                        if (nextCell.Item.Used)
+                        {
+                            Cell.Actor = null;
+                            nextCell.Actor = this;
+                            Cell = nextCell;
+                        }
+                        else
+                        {
+                            if (Inventory.InventoryDict["keys"] > 0)
+                            {
+                                Cell.Actor = null;
+                                nextCell.Actor = this;
+                                Cell = nextCell;
+                                nextCell.Item.Used = true;
+                            }
+                        }
+                    }
                 }
             }
         }

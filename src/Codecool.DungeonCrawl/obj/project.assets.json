@@ -8350,24 +8350,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Iza\\.nuget\\packages\\": {},
+    "C:\\Users\\Anku\\.nuget\\packages\\": {},
     "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Codecool\\OOP\\TW2\\01. ZEBRAZ_GAME\\gameCSharp\\src\\Codecool.DungeonCrawl\\Codecool.DungeonCrawl.csproj",
+      "projectUniqueName": "D:\\OOP\\2 TW najnowsze\\gameCSharp\\src\\Codecool.DungeonCrawl\\Codecool.DungeonCrawl.csproj",
       "projectName": "Codecool.DungeonCrawl",
-      "projectPath": "C:\\Codecool\\OOP\\TW2\\01. ZEBRAZ_GAME\\gameCSharp\\src\\Codecool.DungeonCrawl\\Codecool.DungeonCrawl.csproj",
-      "packagesPath": "C:\\Users\\Iza\\.nuget\\packages\\",
-      "outputPath": "C:\\Codecool\\OOP\\TW2\\01. ZEBRAZ_GAME\\gameCSharp\\src\\Codecool.DungeonCrawl\\obj\\",
+      "projectPath": "D:\\OOP\\2 TW najnowsze\\gameCSharp\\src\\Codecool.DungeonCrawl\\Codecool.DungeonCrawl.csproj",
+      "packagesPath": "C:\\Users\\Anku\\.nuget\\packages\\",
+      "outputPath": "D:\\OOP\\2 TW najnowsze\\gameCSharp\\src\\Codecool.DungeonCrawl\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Codecool\\OOP\\TW2\\01. ZEBRAZ_GAME\\gameCSharp\\src\\Codecool.DungeonCrawl\\NuGet.Config",
-        "C:\\Users\\Iza\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "D:\\OOP\\2 TW najnowsze\\gameCSharp\\src\\Codecool.DungeonCrawl\\NuGet.Config",
+        "C:\\Users\\Anku\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
