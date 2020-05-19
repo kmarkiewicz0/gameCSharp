@@ -59,8 +59,15 @@ namespace Codecool.DungeonCrawl.Logic.Actors
                                 nextCell.Actor = this;
                                 Cell = nextCell;
                                 nextCell.Item.Used = true;
+                                Inventory.InventoryDict["keys"] -= 1;
                             }
                         }
+                    }
+                    else
+                    {
+                        Cell.Actor = null;
+                        nextCell.Actor = this;
+                        Cell = nextCell;
                     }
                 }
             }

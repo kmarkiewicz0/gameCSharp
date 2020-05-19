@@ -32,8 +32,6 @@
         /// </summary>
         public int Y => Cell.Y;
 
-        
-
         /// <summary>
         /// Gets the name of this tile.
         /// </summary>
