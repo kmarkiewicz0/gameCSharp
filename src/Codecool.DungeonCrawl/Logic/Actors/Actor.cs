@@ -16,7 +16,7 @@ namespace Codecool.DungeonCrawl.Logic.Actors
         /// <summary>
         /// Gets or sets this actors health
         /// </summary>
-        public int Health { get; protected set; }
+        public int Health { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Actor"/> class.
@@ -53,7 +53,7 @@ namespace Codecool.DungeonCrawl.Logic.Actors
         /// </summary>
         /// <param name="dx">X amount</param>
         /// <param name="dy">Y amount</param>
-        public void Attack(int dx, int dy)
+        public virtual void Attack(int dx, int dy)
         {
             Cell nextCell = Cell.GetNeighbor(dx, dy);
             if (nextCell.Actor != null)
