@@ -11,7 +11,7 @@ namespace Codecool.DungeonCrawl.Logic
         /// Pick up item, delete from stage
         /// </summary>
         // void PickUp(Inventory Inventory);
-        bool PickUp();
+        void PickUp();
 
         /// <summary>
         /// Adds item to inventory

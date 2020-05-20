@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
+using System.Runtime.ExceptionServices;
 using Codecool.DungeonCrawl.Logic;
 using Codecool.DungeonCrawl.Logic.Actors;
 using Codecool.DungeonCrawl.Logic.Items;
@@ -20,6 +22,7 @@ namespace Codecool.DungeonCrawl
         private GameMap _map;
         private TextField _healthTextField;
         private TextField _inventoryTextField;
+        private List<TextField> _inventoryList;
         private Sprite _mapContainer;
         private Sprite _playerGfx;
         private Sprite _keyToDoorGfx;
@@ -100,19 +103,37 @@ namespace Codecool.DungeonCrawl
             _healthTextField.X = _map.Width * Tiles.TileWidth - 100;
             stage.AddChild(_healthTextField);
 
-            // inventory renter
-            int itemCounter = 1;
-            foreach (KeyValuePair<string, int> invItem in _map.Player.Inventory.InventoryDict)
+            InventoryRender();
+        }
+
+        private void InventoryRender()
+        {
+            _inventoryList = new List<TextField>();
+                int itemCounter = 1;
+                foreach (KeyValuePair<string, int> invItem in _map.Player.Inventory.InventoryDict)
+                {
+                    string itemText = invItem.Key + ":" + invItem.Value.ToString();
+                    _inventoryTextField = new TextField(PerlinApp.FontRobotoMono.CreateFont(14), itemText, false);
+                    _inventoryTextField.HorizontalAlign = HorizontalAlignment.Right;
+                    _inventoryTextField.Width = 100;
+                    _inventoryTextField.Height = 20;
+                    _inventoryTextField.Y = _map.Height * Tiles.TileWidth - 20 * itemCounter;
+                    _inventoryTextField.X = _map.Width * Tiles.TileWidth - 100;
+                    itemCounter++;
+                    _inventoryList.Add(_inventoryTextField);
+                }
+
+            foreach (TextField item in _inventoryList)
             {
-                string itemText = invItem.Key + ":" + invItem.Value.ToString();
-                _inventoryTextField = new TextField(PerlinApp.FontRobotoMono.CreateFont(14), itemText, false);
-                _inventoryTextField.HorizontalAlign = HorizontalAlignment.Right;
-                _inventoryTextField.Width = 100;
-                _inventoryTextField.Height = 20;
-                _inventoryTextField.Y = _map.Height * Tiles.TileWidth - 20 * itemCounter;
-                _inventoryTextField.X = _map.Width * Tiles.TileWidth - 100;
-                itemCounter++;
-                stage.AddChild(_inventoryTextField);
+                PerlinApp.Stage.AddChild(item);
+            }
+        }
+
+        private void ClearInventory()
+        {
+            foreach (TextField item in _inventoryList)
+            {
+                PerlinApp.Stage.RemoveChild(item);
             }
         }
 
@@ -195,19 +216,28 @@ namespace Codecool.DungeonCrawl
             _playerGfx.Y = _map.Player.Y * Tiles.TileWidth;
             _healthTextField.Text = "HP: " + _map.Player.Health.ToString();
 
-            if (_map.Player.X == _map.KeyToDoor.X && _map.Player.Y == _map.KeyToDoor.Y)
+            if (_map.Player.X == _map.KeyToDoor.X && _map.Player.Y == _map.KeyToDoor.Y && _map.KeyToDoor.Cell.Item != null)
             {
                 //TODO: and if nacisnieto przycisk
 
                 PerlinApp.Stage.RemoveChild(_keyToDoorGfx);
+                _map.Player.Inventory.AddToInventory("keys");
+                _map.KeyToDoor.PickUp();
+
+                ClearInventory();
+                InventoryRender();
             }
 
-            if (_map.Player.X == _map.Sword.X && _map.Player.Y == _map.Sword.Y)
+            if (_map.Player.X == _map.Sword.X && _map.Player.Y == _map.Sword.Y && _map.Sword.Cell.Item != null)
             {
-                //TODO: and if nacisnieto przycisk
-             //   _map.Player.Inventory.InventoryDict["swords"] += 1;
-             //   Console.WriteLine(_map.Player.Inventory.InventoryDict["swords"]);
                 PerlinApp.Stage.RemoveChild(_swordGfx);
+
+                // TODO: and if nacisnieto przycisk
+                _map.Player.Inventory.AddToInventory("swords");
+                _map.Sword.PickUp();
+
+                ClearInventory();
+                InventoryRender();
             }
 
             int countSkeleton = 0;

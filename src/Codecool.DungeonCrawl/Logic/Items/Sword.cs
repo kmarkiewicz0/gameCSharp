@@ -24,10 +24,9 @@
         }
 
         /// <inheritdoc/>
-        public bool PickUp()
+        public void PickUp()
         {
             Cell.Item = null;
-            return true;
         }
 
         /// <inheritdoc/>
