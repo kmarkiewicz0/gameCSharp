@@ -62,7 +62,7 @@ namespace Codecool.DungeonCrawl
             _skeletonsSpriteList = new List<Sprite>();
             for (int i = 0; i < _map.Skeletons.Count; i++)
             {
-                _skeletonGfx = new Sprite("tiles.png", false, Tiles.SkeletonTile);
+                _skeletonGfx = new Sprite("tiles2.png", false, Tiles.SkeletonTile);
                 _skeletonGfx.X = _map.Skeletons[i].X * Tiles.TileWidth;
                 _skeletonGfx.Y = _map.Skeletons[i].Y * Tiles.TileWidth;
                 _skeletonsSpriteList.Add(_skeletonGfx);
@@ -70,25 +70,25 @@ namespace Codecool.DungeonCrawl
             }
 
             // Key rendering
-            _keyToDoorGfx = new Sprite("tiles.png", false, Tiles.KeyToDoorTile);
+            _keyToDoorGfx = new Sprite("tiles2.png", false, Tiles.KeyToDoorTile);
             _keyToDoorGfx.X = _map.KeyToDoor.X * Tiles.TileWidth;
             _keyToDoorGfx.Y = _map.KeyToDoor.Y * Tiles.TileWidth;
             stage.AddChild(_keyToDoorGfx);
 
             //Sword rendering
-            _swordGfx = new Sprite("tiles.png", false, Tiles.SwordTile);
+            _swordGfx = new Sprite("tiles2.png", false, Tiles.SwordTile);
             _swordGfx.X = _map.Sword.X * Tiles.TileWidth;
             _swordGfx.Y = _map.Sword.Y * Tiles.TileWidth;
             stage.AddChild(_swordGfx);
 
             //Door rendering
-            _doorGfx = new Sprite("tiles.png", false, Tiles.DoorTile);
+            _doorGfx = new Sprite("tiles2.png", false, Tiles.DoorTile);
             _doorGfx.X = _map.Door.X * Tiles.TileWidth;
             _doorGfx.Y = _map.Door.Y * Tiles.TileWidth;
             stage.AddChild(_doorGfx);
 
             //Player rendering (first)
-            _playerGfx = new Sprite("tiles.png", false, Tiles.PlayerTile);
+            _playerGfx = new Sprite("tiles2.png", false, Tiles.PlayerTile);
             stage.AddChild(_playerGfx);
 
             // health textField
@@ -148,7 +148,7 @@ namespace Codecool.DungeonCrawl
                     var tile = Tiles.GetMapTile(cell);
 
                     // tiles are 16x16 pixels
-                    var sp = new Sprite("tiles.png", false, tile);
+                    var sp = new Sprite("tiles2.png", false, tile);
                     sp.X = x * Tiles.TileWidth;
                     sp.Y = y * Tiles.TileWidth;
                     _mapContainer.AddChild(sp);

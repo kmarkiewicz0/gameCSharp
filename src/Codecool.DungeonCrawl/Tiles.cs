@@ -12,7 +12,7 @@ namespace Codecool.DungeonCrawl
         /// <summary>
         /// Width of a single image in the tile map
         /// </summary>
-        public const int TileWidth = 16;
+        public const int TileWidth = 32;
 
         /// <summary>
         /// Coordinates of the player graphic.
@@ -65,7 +65,7 @@ namespace Codecool.DungeonCrawl
 
         private static Rectangle CreateTile(int i, int j)
         {
-            return new Rectangle(i * (TileWidth + 1), j * (TileWidth + 1), TileWidth, TileWidth);
+            return new Rectangle(i * (TileWidth + 2), j * (TileWidth + 2), TileWidth, TileWidth);
         }
     }
 }
