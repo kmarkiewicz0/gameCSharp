@@ -100,25 +100,19 @@ namespace Codecool.DungeonCrawl.Logic.Actors
                     if (IsSwordInInventory())
                     {
                         nextCell.Actor.Health -= 10;
-                        Console.WriteLine($"Player deals 10 damage to Skeleton. Health left" +
+                        Program.RenderMessage($"Player deals 10 damage to Skeleton. Skeleton hp left" +
                             $" {nextCell.Actor.Health}");
                     }
                     else
                     {
                         nextCell.Actor.Health -= 5;
-                        Console.WriteLine($"Player deals 5 damage to Skeleton. Health left" +
+                        Program.RenderMessage($"Player deals 5 damage to Skeleton. Skeleton hp left" +
                             $" {nextCell.Actor.Health}");
                     }
 
                     if (nextCell.Actor.Health != 0)
                     {
                         Cell.Actor.Health -= 2;
-                        Console.WriteLine($"Skeleton deals 2 damage to Player. Health left" +
-                        $" {Cell.Actor.Health}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Skeleton died");
                     }
                 }
                 else if (nextCell.Actor.Tilename == "ghost")
@@ -126,25 +120,19 @@ namespace Codecool.DungeonCrawl.Logic.Actors
                     if (IsSwordInInventory())
                     {
                         nextCell.Actor.Health -= 10;
-                        Console.WriteLine($"Player deals 10 damage to Ghost. Health left" +
+                        Program.RenderMessage($"Player deals 10 damage to Ghost. Ghost hp left" +
                             $" {nextCell.Actor.Health}");
                     }
                     else
                     {
                         nextCell.Actor.Health -= 5;
-                        Console.WriteLine($"Player deals 5 damage to Ghost. Health left" +
+                        Program.RenderMessage($"Player deals 5 damage to Ghost. Ghost hp left" +
                             $" {nextCell.Actor.Health}");
                     }
 
                     if (nextCell.Actor.Health != 0)
                     {
                         Cell.Actor.Health -= 5;
-                        Console.WriteLine($"Ghost deals 5 damage to Player. Health left" +
-                        $" {Cell.Actor.Health}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Ghost died");
                     }
                 }
             }
