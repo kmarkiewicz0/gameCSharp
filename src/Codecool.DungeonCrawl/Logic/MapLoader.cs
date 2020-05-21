@@ -23,6 +23,7 @@ namespace Codecool.DungeonCrawl.Logic
             var width = int.Parse(dimensions[0]);
             var height = int.Parse(dimensions[1]);
             Skeleton skeleton;
+            Ghost ghost;
 
             GameMap map = new GameMap(width, height, CellType.Empty);
             for (var y = 0; y < height; y++)
@@ -50,9 +51,12 @@ namespace Codecool.DungeonCrawl.Logic
                                 skeleton = new Skeleton(cell);
                                 Console.Write("Skeleton health: ");
                                 Console.WriteLine(skeleton.Health);
-
-                                // TODO change this code to allow more than one enemy
-                                map.Skeletons.Add(new Skeleton(cell));
+                                map.Skeletons.Add(skeleton);
+                                break;
+                            case 'g':
+                                cell.Type = CellType.Floor;
+                                ghost = new Ghost(cell);
+                                map.Ghosts.Add(ghost);
                                 break;
                             case '@':
                                 cell.Type = CellType.Floor;

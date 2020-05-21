@@ -39,7 +39,7 @@ namespace Codecool.DungeonCrawl.Logic.Actors
             Cell nextCell = Cell.GetNeighbor(dx, dy);
             if (nextCell.Tilename == "Floor")
             {
-                if (nextCell.Actor == null)
+                if (nextCell.Actor == null && nextCell.Item == null)
                 {
                     Cell.Actor = null;
                     nextCell.Actor = this;

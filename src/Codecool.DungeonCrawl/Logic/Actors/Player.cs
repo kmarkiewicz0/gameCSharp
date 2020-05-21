@@ -49,7 +49,7 @@ namespace Codecool.DungeonCrawl.Logic.Actors
         /// <summary>
         /// Moves player by the given amount
         /// </summary>
-        /// <param name="dx">X amoount</param>
+        /// <param name="dx">X amount</param>
         /// <param name="dy">Y amount</param>
         public override void Move(int dx, int dy)
         {
@@ -94,28 +94,57 @@ namespace Codecool.DungeonCrawl.Logic.Actors
             Cell nextCell = Cell.GetNeighbor(dx, dy);
             if (nextCell.Actor != null)
             {
-                if (IsSwordInInventory())
+                if (nextCell.Actor.Tilename == "skeleton")
                 {
-                    nextCell.Actor.Health -= 10;
-                    Console.WriteLine($"Player deals 10 damage to Skeleton. Health left" +
-                        $" {nextCell.Actor.Health}");
-                }
-                else
-                {
-                    nextCell.Actor.Health -= 5;
-                    Console.WriteLine($"Player deals 5 damage to Skeleton. Health left" +
-                        $" {nextCell.Actor.Health}");
-                }
+                    if (IsSwordInInventory())
+                    {
+                        nextCell.Actor.Health -= 10;
+                        Console.WriteLine($"Player deals 10 damage to Skeleton. Health left" +
+                            $" {nextCell.Actor.Health}");
+                    }
+                    else
+                    {
+                        nextCell.Actor.Health -= 5;
+                        Console.WriteLine($"Player deals 5 damage to Skeleton. Health left" +
+                            $" {nextCell.Actor.Health}");
+                    }
 
-                if (nextCell.Actor.Health != 0)
-                {
-                    Cell.Actor.Health -= 2;
-                    Console.WriteLine($"Skeleton deals 2 damage to Player. Health left" +
-                    $" {Cell.Actor.Health}");
+                    if (nextCell.Actor.Health != 0)
+                    {
+                        Cell.Actor.Health -= 2;
+                        Console.WriteLine($"Skeleton deals 2 damage to Player. Health left" +
+                        $" {Cell.Actor.Health}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Skeleton died");
+                    }
                 }
-                else
+                else if (nextCell.Actor.Tilename == "ghost")
                 {
-                    Console.WriteLine("Skeleton died");
+                    if (IsSwordInInventory())
+                    {
+                        nextCell.Actor.Health -= 10;
+                        Console.WriteLine($"Player deals 10 damage to Ghost. Health left" +
+                            $" {nextCell.Actor.Health}");
+                    }
+                    else
+                    {
+                        nextCell.Actor.Health -= 5;
+                        Console.WriteLine($"Player deals 5 damage to Ghost. Health left" +
+                            $" {nextCell.Actor.Health}");
+                    }
+
+                    if (nextCell.Actor.Health != 0)
+                    {
+                        Cell.Actor.Health -= 5;
+                        Console.WriteLine($"Ghost deals 5 damage to Player. Health left" +
+                        $" {Cell.Actor.Health}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Ghost died");
+                    }
                 }
             }
         }
