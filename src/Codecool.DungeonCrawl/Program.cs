@@ -36,6 +36,7 @@ namespace Codecool.DungeonCrawl
         private Sprite _stairsGfx;
         private List<Sprite> _skeletonsSpriteList;
         private List<Sprite> _ghostSpriteList;
+        private List<Sprite> _ghostSpriteListSecond;
         private int _beforeBreathHp;
         private List<Sprite> _dragonFireList;
         private Sprite _fireGfx;
@@ -89,17 +90,6 @@ namespace Codecool.DungeonCrawl
                     stage.AddChild(_skeletonGfx);
                 }
 
-                // Ghost rendering
-                _ghostSpriteList = new List<Sprite>();
-                for (int i = 0; i < _map.Ghosts.Count; i++)
-                {
-                    _ghostGfx = new Sprite("Graphics\\ghost.png", false, Tiles.GhostTile);
-                    _ghostGfx.X = _map.Ghosts[i].X * Tiles.TileWidth;
-                    _ghostGfx.Y = _map.Ghosts[i].Y * Tiles.TileWidth;
-                    _ghostSpriteList.Add(_ghostGfx);
-                    stage.AddChild(_ghostGfx);
-                }
-
                 // Dragon rendering
                 _dragonGfx = new Sprite("Graphics\\dragon.png", false, Tiles.DragonTile);
                 _dragonGfx.X = _map.Dragon.X * Tiles.TileWidth;
@@ -149,6 +139,31 @@ namespace Codecool.DungeonCrawl
                 _openDoorGfx = new Sprite("Graphics\\open_door.png", false, Tiles.DoorTile);
                 _openDoorGfx.X = _map.Door.X * Tiles.TileWidth;
                 _openDoorGfx.Y = _map.Door.Y * Tiles.TileWidth;
+
+                // Ghost rendering
+                _ghostSpriteList = new List<Sprite>();
+                for (int i = 0; i < _map.Ghosts.Count; i++)
+                {
+                    _ghostGfx = new Sprite("Graphics\\ghost.png", false, Tiles.GhostTile);
+                    _ghostGfx.X = _map.Ghosts[i].X * Tiles.TileWidth;
+                    _ghostGfx.Y = _map.Ghosts[i].Y * Tiles.TileWidth;
+                    _ghostSpriteList.Add(_ghostGfx);
+                    stage.AddChild(_ghostGfx);
+                }
+            }
+
+            if (MapFile == "map2.txt")
+            {
+                // Ghost second rendering
+                _ghostSpriteListSecond = new List<Sprite>();
+                for (int i = 0; i < _map.GhostsSecond.Count; i++)
+                {
+                    _ghostGfx = new Sprite("Graphics\\ghost.png", false, Tiles.GhostTile);
+                    _ghostGfx.X = _map.GhostsSecond[i].X * Tiles.TileWidth;
+                    _ghostGfx.Y = _map.GhostsSecond[i].Y * Tiles.TileWidth;
+                    _ghostSpriteListSecond.Add(_ghostGfx);
+                    stage.AddChild(_ghostGfx);
+                }
             }
 
             // Player rendering (first)
@@ -250,11 +265,11 @@ namespace Codecool.DungeonCrawl
         // this gets called every frame
         private void StageOnEnterFrameEvent(DisplayObject target, float elapsedtimesecs)
         {
+            Random rnd = new Random();
+            int randomY, randomX;
+
             if (MapFile == "map.txt")
             {
-                Random rnd = new Random();
-                int randomY, randomX;
-
                 // process inputs
                 if (KeyboardInput.IsKeyPressedThisFrame(Key.W) || KeyboardInput.IsKeyPressedThisFrame(Key.Up))
                 {
@@ -482,6 +497,13 @@ namespace Codecool.DungeonCrawl
                         PerlinApp.Stage.RemoveChild(_ghostSpriteList[countGhost]);
                         ghost.Cell.Actor = null;
                     }
+
+                    if (_map.Player.Health <= 0)
+                    {
+                        PerlinApp.Stage.RemoveAllChildren();
+                        PerlinApp.Stage.EnterFrameEvent -= StageOnEnterFrameEvent;
+                        Console.WriteLine("Game over. You are dead.");
+                    }
                 }
 
                 // Render dragon changes
@@ -500,7 +522,7 @@ namespace Codecool.DungeonCrawl
                 }
             }
 
-            // second map
+// second map !!!!!!!!!!!!!!!!!!!!!
             if (MapFile == "map2.txt")
             {
                 // process inputs
@@ -508,24 +530,56 @@ namespace Codecool.DungeonCrawl
                 {
                     _map.Player.Move(0, -1);
                     _map.Player.Attack(0, -1);
+
+                    // Update ghost position
+                    foreach (Ghost ghost in _map.GhostsSecond)
+                    {
+                        randomY = rnd.Next(-1, 2);
+                        randomX = rnd.Next(-1, 2);
+                        ghost.Move(randomX, randomY);
+                    }
                 }
 
                 if (KeyboardInput.IsKeyPressedThisFrame(Key.S) || KeyboardInput.IsKeyPressedThisFrame(Key.Down))
                 {
                     _map.Player.Move(0, 1);
                     _map.Player.Attack(0, 1);
+
+                    // Update ghost position
+                    foreach (Ghost ghost in _map.GhostsSecond)
+                    {
+                        randomY = rnd.Next(-1, 2);
+                        randomX = rnd.Next(-1, 2);
+                        ghost.Move(randomX, randomY);
+                    }
                 }
 
                 if (KeyboardInput.IsKeyPressedThisFrame(Key.A) || KeyboardInput.IsKeyPressedThisFrame(Key.Left))
                 {
                     _map.Player.Move(-1, 0);
                     _map.Player.Attack(-1, 0);
+
+                    // Update ghost position
+                    foreach (Ghost ghost in _map.GhostsSecond)
+                    {
+                        randomY = rnd.Next(-1, 2);
+                        randomX = rnd.Next(-1, 2);
+                        ghost.Move(randomX, randomY);
+                    }
                 }
 
                 if (KeyboardInput.IsKeyPressedThisFrame(Key.D) || KeyboardInput.IsKeyPressedThisFrame(Key.Right))
                 {
                     _map.Player.Move(1, 0);
                     _map.Player.Attack(1, 0);
+
+                    // Update ghost position
+                    foreach (Ghost ghost in _map.GhostsSecond)
+                    {
+                        randomY = rnd.Next(-1, 2);
+                        randomX = rnd.Next(-1, 2);
+                        ghost.Move(randomX, randomY);
+                    }
                 }
 
                 // render changes
@@ -534,11 +588,12 @@ namespace Codecool.DungeonCrawl
                 _healthTextField.Text = "HP: " + _map.Player.Health.ToString();
             }
 
-            if (_map.Player.Health <= 0)
+            // Render ghost changes
+            int countGhostSec = 0;
+            foreach (Ghost ghost in _map.GhostsSecond)
             {
-                PerlinApp.Stage.RemoveAllChildren();
-                PerlinApp.Stage.EnterFrameEvent -= StageOnEnterFrameEvent;
-                Console.WriteLine("Game over. You are dead.");
+                _ghostSpriteListSecond[countGhostSec].X = ghost.X * Tiles.TileWidth;
+                _ghostSpriteListSecond[countGhostSec].Y = ghost.Y * Tiles.TileWidth;
             }
         }
     }

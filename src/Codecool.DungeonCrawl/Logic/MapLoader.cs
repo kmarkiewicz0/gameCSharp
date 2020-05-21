@@ -24,6 +24,7 @@ namespace Codecool.DungeonCrawl.Logic
             var height = int.Parse(dimensions[1]);
             Skeleton skeleton;
             Ghost ghost;
+            Ghost ghosts;
 
             GameMap map = new GameMap(width, height, CellType.Empty);
             for (var y = 0; y < height; y++)
@@ -47,16 +48,18 @@ namespace Codecool.DungeonCrawl.Logic
                                 break;
                             case 's':
                                 cell.Type = CellType.Floor;
-
                                 skeleton = new Skeleton(cell);
-                                Console.Write("Skeleton health: ");
-                                Console.WriteLine(skeleton.Health);
                                 map.Skeletons.Add(skeleton);
                                 break;
                             case 'g':
                                 cell.Type = CellType.Floor;
                                 ghost = new Ghost(cell);
                                 map.Ghosts.Add(ghost);
+                                break;
+                            case 'l':
+                                cell.Type = CellType.Floor;
+                                ghosts = new Ghost(cell);
+                                map.GhostsSecond.Add(ghosts);
                                 break;
                             case '@':
                                 cell.Type = CellType.Floor;
