@@ -31,9 +31,13 @@ namespace Codecool.DungeonCrawl
         private Sprite _swordGfx;
         private Sprite _skeletonGfx;
         private Sprite _ghostGfx;
+        private Sprite _dragonGfx;
         private Sprite _doorGfx;
         private List<Sprite> _skeletonsSpriteList;
         private List<Sprite> _ghostSpriteList;
+        private int _beforeBreathHp;
+        private List<Sprite> _dragonFireList;
+        private Sprite _fireGfx;
 
         public static TextField GameMessage { get; set; }
 
@@ -89,6 +93,27 @@ namespace Codecool.DungeonCrawl
                 _ghostGfx.Y = _map.Ghosts[i].Y * Tiles.TileWidth;
                 _ghostSpriteList.Add(_ghostGfx);
                 stage.AddChild(_ghostGfx);
+            }
+
+            // Dragon rendering
+            _dragonGfx = new Sprite("Graphics\\dragon.png", false, Tiles.DragonTile);
+            _dragonGfx.X = _map.Dragon.X * Tiles.TileWidth;
+            _dragonGfx.Y = _map.Dragon.Y * Tiles.TileWidth;
+            stage.AddChild(_dragonGfx);
+
+            // Dragon fire rendering
+            int rangeX = _map.Dragon.X;
+            int rangeY = _map.Dragon.Y;
+            int[] rangeArrX = { rangeX, rangeX, rangeX - 1, rangeX + 1 };
+            int[] rangeArrY = { rangeY - 1, rangeY - 2, rangeY - 2, rangeY - 2 };
+            _dragonFireList = new List<Sprite>();
+
+            for (int index = 0; index < rangeArrX.Length; index++)
+            {
+                _fireGfx = new Sprite("Graphics\\conjure_flame.png", false, Tiles.DragonTile);
+                _fireGfx.X = rangeArrX[index] * Tiles.TileWidth;
+                _fireGfx.Y = rangeArrY[index] * Tiles.TileWidth;
+                _dragonFireList.Add(_fireGfx);
             }
 
             // Key rendering
@@ -221,6 +246,23 @@ namespace Codecool.DungeonCrawl
             {
                 _map.Player.Move(0, -1);
                 _map.Player.Attack(0, -1);
+                if (_map.Dragon.Health > 0)
+                {
+                    if (_map.Dragon.DragonBreath(_map.Player))
+                    {
+                        foreach (Sprite fire in _dragonFireList)
+                        {
+                            PerlinApp.Stage.AddChild(fire);
+                        }
+                    }
+                    else
+                    {
+                        foreach (Sprite fire in _dragonFireList)
+                        {
+                            PerlinApp.Stage.RemoveChild(fire);
+                        }
+                    }
+                }
 
                 // Update skeleton position
                 foreach (Skeleton skeleton in _map.Skeletons)
@@ -243,6 +285,25 @@ namespace Codecool.DungeonCrawl
             {
                 _map.Player.Move(0, 1);
                 _map.Player.Attack(0, 1);
+                _beforeBreathHp = _map.Player.Health;
+                if (_map.Dragon.Health > 0)
+                {
+                    if (_map.Dragon.DragonBreath(_map.Player))
+                    {
+                        foreach (Sprite fire in _dragonFireList)
+                        {
+                            PerlinApp.Stage.AddChild(fire);
+                        }
+                    }
+                    else
+                    {
+                        foreach (Sprite fire in _dragonFireList)
+                        {
+                            PerlinApp.Stage.RemoveChild(fire);
+                        }
+                    }
+                }
+
                 foreach (Skeleton skeleton in _map.Skeletons)
                 {
                     randomY = rnd.Next(-1, 2);
@@ -262,6 +323,25 @@ namespace Codecool.DungeonCrawl
             {
                 _map.Player.Move(-1, 0);
                 _map.Player.Attack(-1, 0);
+                _beforeBreathHp = _map.Player.Health;
+                if (_map.Dragon.Health > 0)
+                {
+                    if (_map.Dragon.DragonBreath(_map.Player))
+                    {
+                        foreach (Sprite fire in _dragonFireList)
+                        {
+                            PerlinApp.Stage.AddChild(fire);
+                        }
+                    }
+                    else
+                    {
+                        foreach (Sprite fire in _dragonFireList)
+                        {
+                            PerlinApp.Stage.RemoveChild(fire);
+                        }
+                    }
+                }
+
                 foreach (Skeleton skeleton in _map.Skeletons)
                 {
                     randomY = rnd.Next(-1, 2);
@@ -281,6 +361,25 @@ namespace Codecool.DungeonCrawl
             {
                 _map.Player.Move(1, 0);
                 _map.Player.Attack(1, 0);
+                _beforeBreathHp = _map.Player.Health;
+                if (_map.Dragon.Health > 0)
+                {
+                    if (_map.Dragon.DragonBreath(_map.Player))
+                    {
+                        foreach (Sprite fire in _dragonFireList)
+                        {
+                            PerlinApp.Stage.AddChild(fire);
+                        }
+                    }
+                    else
+                    {
+                        foreach (Sprite fire in _dragonFireList)
+                        {
+                            PerlinApp.Stage.RemoveChild(fire);
+                        }
+                    }
+                }
+
                 foreach (Skeleton skeleton in _map.Skeletons)
                 {
                     randomY = rnd.Next(-1, 2);
@@ -327,6 +426,8 @@ namespace Codecool.DungeonCrawl
 
             if (_map.Player.X == _map.Door.X && _map.Player.Y == _map.Door.Y && _map.Door.Used)
             {
+                ClearInventory();
+                InventoryRender();
                 PerlinApp.Stage.RemoveChild(_doorGfx);
                 PerlinApp.Stage.AddChild(_openDoorGfx);
             }
@@ -358,6 +459,18 @@ namespace Codecool.DungeonCrawl
                     PerlinApp.Stage.RemoveChild(_ghostSpriteList[countGhost]);
                     ghost.Cell.Actor = null;
                 }
+            }
+
+            // Render dragon changes
+            if (_map.Dragon.Health == 0)
+            {
+                PerlinApp.Stage.RemoveChild(_dragonGfx);
+                foreach (Sprite fire in _dragonFireList)
+                {
+                    PerlinApp.Stage.RemoveChild(fire);
+                }
+
+                _map.Dragon.Cell.Actor = null;
             }
         }
     }

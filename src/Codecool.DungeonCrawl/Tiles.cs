@@ -22,7 +22,6 @@ namespace Codecool.DungeonCrawl
         /// <summary>
         /// Coordinates of the skeleton graphic.
         /// </summary>
-        // public static readonly Rectangle SkeletonTile = CreateTile(29, 6);
         public static readonly Rectangle SkeletonTile = CreateTile(1, 1);
 
         /// <summary>
@@ -31,7 +30,7 @@ namespace Codecool.DungeonCrawl
         public static readonly Rectangle GhostTile = CreateTile(1, 1);
 
         /// <summary>
-        /// Coordinates of the key to thr door graphic.
+        /// Coordinates of the key to the door graphic.
         /// </summary>
         public static readonly Rectangle KeyToDoorTile = CreateTile(1, 1);
 
@@ -41,14 +40,19 @@ namespace Codecool.DungeonCrawl
         public static readonly Rectangle SwordTile = CreateTile(1, 1);
 
         /// <summary>
-        /// Coordinates of sword graphic.
+        /// Coordinates of doors graphic.
         /// </summary>
         public static readonly Rectangle DoorTile = CreateTile(1, 1);
 
         /// <summary>
-        /// Coordinates of sword graphic.
+        /// Coordinates of opened doors graphic.
         /// </summary>
         public static readonly Rectangle DoorOpenedTile = CreateTile(1, 1);
+
+        /// <summary>
+        /// Coordinates of the dragon graphic.
+        /// </summary>
+        public static readonly Rectangle DragonTile = CreateTile(1, 1);
 
         private static readonly Dictionary<string, Rectangle> TileMap = new Dictionary<string, Rectangle>();
 

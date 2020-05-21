@@ -26,6 +26,16 @@ namespace Codecool.DungeonCrawl.Logic
         public List<Ghost> Ghosts;
 
         /// <summary>
+        /// A boss
+        /// </summary>
+        public Dragon Dragon;
+
+        /// <summary>
+        /// Dragon fire list
+        /// </summary>
+        public List<DragonFire> DragonFires;
+
+        /// <summary>
         /// Key to the door
         /// </summary>
         public KeyToDoor KeyToDoor;
@@ -55,6 +65,7 @@ namespace Codecool.DungeonCrawl.Logic
             _cells = new Cell[width, height];
             Skeletons = new List<Skeleton>();
             Ghosts = new List<Ghost>();
+            DragonFires = new List<DragonFire>();
 
             for (var x = 0; x < width; x++)
             {

@@ -10,7 +10,7 @@ namespace Codecool.DungeonCrawl.Logic.Actors
     public class Ghost : Actor
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Skeleton"/> class.
+        /// Initializes a new instance of the <see cref="Ghost"/> class.
         /// </summary>
         /// <param name="cell">The starting cell</param>
         public Ghost(Cell cell)

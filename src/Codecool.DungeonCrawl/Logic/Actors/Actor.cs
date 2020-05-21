@@ -19,7 +19,7 @@ namespace Codecool.DungeonCrawl.Logic.Actors
         public int Health { get; set; }
 
         /// <summary>
-        /// Gets or sets this actors health
+        /// Gets or sets message
         /// </summary>
         public string Message { get; set; }
 

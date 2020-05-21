@@ -135,6 +135,28 @@ namespace Codecool.DungeonCrawl.Logic.Actors
                         Cell.Actor.Health -= 5;
                     }
                 }
+                else if (nextCell.Actor.Tilename == "dragon")
+                {
+                    if (IsSwordInInventory())
+                    {
+                        nextCell.Actor.Health -= 10;
+                        Program.RenderMessage($"Player deals 10 damage to Dragon. Dragon hp left" +
+                            $" {nextCell.Actor.Health}");
+                    }
+                    else
+                    {
+                        nextCell.Actor.Health -= 5;
+                        Program.RenderMessage($"Player deals 5 damage to Dragon. Dragon hp left" +
+                            $" {nextCell.Actor.Health}");
+                    }
+
+                    if (nextCell.Actor.Health != 0)
+                    {
+                        Cell.Actor.Health -= 5;
+                        Program.RenderMessage($"Dragon deals 5 damage to Player. Player hp left" +
+                            $" {Cell.Actor.Health}");
+                    }
+                }
             }
         }
     }
