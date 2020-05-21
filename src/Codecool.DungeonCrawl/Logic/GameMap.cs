@@ -16,9 +16,14 @@ namespace Codecool.DungeonCrawl.Logic
         public Player Player;
 
         /// <summary>
-        /// A sample enemy
+        /// A sample enemy list
         /// </summary>
         public List<Skeleton> Skeletons;
+
+        /// <summary>
+        /// A ghost enemy list
+        /// </summary>
+        public List<Ghost> Ghosts;
 
         /// <summary>
         /// Key to the door
@@ -49,6 +54,8 @@ namespace Codecool.DungeonCrawl.Logic
             Height = height;
             _cells = new Cell[width, height];
             Skeletons = new List<Skeleton>();
+            Ghosts = new List<Ghost>();
+
             for (var x = 0; x < width; x++)
             {
                 for (var y = 0; y < height; y++)

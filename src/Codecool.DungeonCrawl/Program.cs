@@ -29,8 +29,10 @@ namespace Codecool.DungeonCrawl
         private Sprite _keyToDoorGfx;
         private Sprite _swordGfx;
         private Sprite _skeletonGfx;
+        private Sprite _ghostGfx;
         private Sprite _doorGfx;
         private List<Sprite> _skeletonsSpriteList;
+        private List<Sprite> _ghostSpriteList;
 
         public static TextField GameMessage { get; set; }
 
@@ -75,6 +77,17 @@ namespace Codecool.DungeonCrawl
                 _skeletonGfx.Y = _map.Skeletons[i].Y * Tiles.TileWidth;
                 _skeletonsSpriteList.Add(_skeletonGfx);
                 stage.AddChild(_skeletonGfx);
+            }
+
+            // Ghost rendering
+            _ghostSpriteList = new List<Sprite>();
+            for (int i = 0; i < _map.Ghosts.Count; i++)
+            {
+                _ghostGfx = new Sprite("tiles2.png", false, Tiles.GhostTile);
+                _ghostGfx.X = _map.Ghosts[i].X * Tiles.TileWidth;
+                _ghostGfx.Y = _map.Ghosts[i].Y * Tiles.TileWidth;
+                _ghostSpriteList.Add(_ghostGfx);
+                stage.AddChild(_ghostGfx);
             }
 
             // Key rendering
@@ -185,11 +198,21 @@ namespace Codecool.DungeonCrawl
             {
                 _map.Player.Move(0, -1);
                 _map.Player.Attack(0, -1);
+
+                // Update skeleton position
                 foreach (Skeleton skeleton in _map.Skeletons)
                 {
                     randomY = rnd.Next(-1, 2);
                     randomX = rnd.Next(-1, 2);
                     skeleton.Move(randomX, randomY);
+                }
+
+                // Update ghost position
+                foreach (Ghost ghost in _map.Ghosts)
+                {
+                    randomY = rnd.Next(-1, 2);
+                    randomX = rnd.Next(-1, 2);
+                    ghost.Move(randomX, randomY);
                 }
             }
 
@@ -203,6 +226,13 @@ namespace Codecool.DungeonCrawl
                     randomX = rnd.Next(-1, 2);
                     skeleton.Move(randomX, randomY);
                 }
+
+                foreach (Ghost ghost in _map.Ghosts)
+                {
+                    randomY = rnd.Next(-1, 2);
+                    randomX = rnd.Next(-1, 2);
+                    ghost.Move(randomX, randomY);
+                }
             }
 
             if (KeyboardInput.IsKeyPressedThisFrame(Key.A) || KeyboardInput.IsKeyPressedThisFrame(Key.Left))
@@ -215,6 +245,13 @@ namespace Codecool.DungeonCrawl
                     randomX = rnd.Next(-1, 2);
                     skeleton.Move(randomX, randomY);
                 }
+
+                foreach (Ghost ghost in _map.Ghosts)
+                {
+                    randomY = rnd.Next(-1, 2);
+                    randomX = rnd.Next(-1, 2);
+                    ghost.Move(randomX, randomY);
+                }
             }
 
             if (KeyboardInput.IsKeyPressedThisFrame(Key.D) || KeyboardInput.IsKeyPressedThisFrame(Key.Right))
@@ -226,6 +263,13 @@ namespace Codecool.DungeonCrawl
                     randomY = rnd.Next(-1, 2);
                     randomX = rnd.Next(-1, 2);
                     skeleton.Move(randomX, randomY);
+                }
+
+                foreach (Ghost ghost in _map.Ghosts)
+                {
+                    randomY = rnd.Next(-1, 2);
+                    randomX = rnd.Next(-1, 2);
+                    ghost.Move(randomX, randomY);
                 }
             }
 
@@ -258,6 +302,7 @@ namespace Codecool.DungeonCrawl
                 InventoryRender();
             }
 
+            // Render skeleton changes
             int countSkeleton = 0;
             foreach (Skeleton skeleton in _map.Skeletons)
             {
@@ -271,6 +316,20 @@ namespace Codecool.DungeonCrawl
                 }
 
                 countSkeleton++;
+            }
+
+            // Render ghost changes
+            int countGhost = 0;
+            foreach (Ghost ghost in _map.Ghosts)
+            {
+                _ghostSpriteList[countGhost].X = ghost.X * Tiles.TileWidth;
+                _ghostSpriteList[countGhost].Y = ghost.Y * Tiles.TileWidth;
+
+                if (ghost.Health == 0)
+                {
+                    PerlinApp.Stage.RemoveChild(_ghostSpriteList[countGhost]);
+                    ghost.Cell.Actor = null;
+                }
             }
         }
     }
