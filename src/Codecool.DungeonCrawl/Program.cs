@@ -533,6 +533,13 @@ namespace Codecool.DungeonCrawl
                 _playerGfx.Y = _map.Player.Y * Tiles.TileWidth;
                 _healthTextField.Text = "HP: " + _map.Player.Health.ToString();
             }
+
+            if (_map.Player.Health <= 0)
+            {
+                PerlinApp.Stage.RemoveAllChildren();
+                PerlinApp.Stage.EnterFrameEvent -= StageOnEnterFrameEvent;
+                Console.WriteLine("Game over. You are dead.");
+            }
         }
     }
 }
