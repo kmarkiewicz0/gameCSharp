@@ -50,6 +50,11 @@ namespace Codecool.DungeonCrawl.Logic
         /// </summary>
         public Door Door;
 
+        /// <summary>
+        /// Stairs
+        /// </summary>
+        public Stairs Stairs;
+
         private readonly Cell[,] _cells;
 
         /// <summary>

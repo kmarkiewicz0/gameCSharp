@@ -10,15 +10,25 @@
     <OldToolsVersion>Current</OldToolsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Graphics\conjure_flame.png" />
     <None Remove="Graphics\door.png" />
+    <None Remove="Graphics\dragon.png" />
     <None Remove="Graphics\ghost.png" />
     <None Remove="Graphics\key.png" />
     <None Remove="Graphics\open_door.png" />
     <None Remove="Graphics\player.png" />
+    <None Remove="Graphics\stairs.png" />
     <None Remove="Graphics\sword.png" />
+    <None Remove="map2.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Graphics\conjure_flame.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Graphics\door.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\dragon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Graphics\empty.png">
@@ -45,10 +55,16 @@
     <Content Include="Graphics\skeleton_humanoid_small.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Graphics\stairs.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Graphics\sword.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Graphics\wall.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="map2.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

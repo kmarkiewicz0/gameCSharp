@@ -33,6 +33,7 @@ namespace Codecool.DungeonCrawl
         private Sprite _ghostGfx;
         private Sprite _dragonGfx;
         private Sprite _doorGfx;
+        private Sprite _stairsGfx;
         private List<Sprite> _skeletonsSpriteList;
         private List<Sprite> _ghostSpriteList;
         private int _beforeBreathHp;
@@ -40,6 +41,8 @@ namespace Codecool.DungeonCrawl
         private Sprite _fireGfx;
 
         public static TextField GameMessage { get; set; }
+
+        private string MapFile { get; set; } = "map.txt";
 
         /// <summary>
         /// Entry point
@@ -56,7 +59,7 @@ namespace Codecool.DungeonCrawl
 
         private Program()
         {
-            _map = MapLoader.LoadMap();
+            _map = MapLoader.LoadMap(MapFile);
             PerlinApp.Start(_map.Width * Tiles.TileWidth,
                 _map.Height * Tiles.TileWidth,
                 "Dungeon Crawl",
@@ -73,73 +76,82 @@ namespace Codecool.DungeonCrawl
             stage.AddChild(_mapContainer);
             DrawMap();
 
-            // Skeletons rendering
-            _skeletonsSpriteList = new List<Sprite>();
-            for (int i = 0; i < _map.Skeletons.Count; i++)
+            if (MapFile == "map.txt")
             {
-                _skeletonGfx = new Sprite("Graphics\\skeleton_humanoid_small.png", false, Tiles.SkeletonTile);
-                _skeletonGfx.X = _map.Skeletons[i].X * Tiles.TileWidth;
-                _skeletonGfx.Y = _map.Skeletons[i].Y * Tiles.TileWidth;
-                _skeletonsSpriteList.Add(_skeletonGfx);
-                stage.AddChild(_skeletonGfx);
+                // Skeletons rendering
+                _skeletonsSpriteList = new List<Sprite>();
+                for (int i = 0; i < _map.Skeletons.Count; i++)
+                {
+                    _skeletonGfx = new Sprite("Graphics\\skeleton_humanoid_small.png", false, Tiles.SkeletonTile);
+                    _skeletonGfx.X = _map.Skeletons[i].X * Tiles.TileWidth;
+                    _skeletonGfx.Y = _map.Skeletons[i].Y * Tiles.TileWidth;
+                    _skeletonsSpriteList.Add(_skeletonGfx);
+                    stage.AddChild(_skeletonGfx);
+                }
+
+                // Ghost rendering
+                _ghostSpriteList = new List<Sprite>();
+                for (int i = 0; i < _map.Ghosts.Count; i++)
+                {
+                    _ghostGfx = new Sprite("Graphics\\ghost.png", false, Tiles.GhostTile);
+                    _ghostGfx.X = _map.Ghosts[i].X * Tiles.TileWidth;
+                    _ghostGfx.Y = _map.Ghosts[i].Y * Tiles.TileWidth;
+                    _ghostSpriteList.Add(_ghostGfx);
+                    stage.AddChild(_ghostGfx);
+                }
+
+                // Dragon rendering
+                _dragonGfx = new Sprite("Graphics\\dragon.png", false, Tiles.DragonTile);
+                _dragonGfx.X = _map.Dragon.X * Tiles.TileWidth;
+                _dragonGfx.Y = _map.Dragon.Y * Tiles.TileWidth;
+                stage.AddChild(_dragonGfx);
+
+                // Dragon fire rendering
+                int rangeX = _map.Dragon.X;
+                int rangeY = _map.Dragon.Y;
+                int[] rangeArrX = { rangeX, rangeX, rangeX - 1, rangeX + 1 };
+                int[] rangeArrY = { rangeY - 1, rangeY - 2, rangeY - 2, rangeY - 2 };
+                _dragonFireList = new List<Sprite>();
+
+                for (int index = 0; index < rangeArrX.Length; index++)
+                {
+                    _fireGfx = new Sprite("Graphics\\conjure_flame.png", false, Tiles.DragonTile);
+                    _fireGfx.X = rangeArrX[index] * Tiles.TileWidth;
+                    _fireGfx.Y = rangeArrY[index] * Tiles.TileWidth;
+                    _dragonFireList.Add(_fireGfx);
+                }
+
+                // Key rendering
+                _keyToDoorGfx = new Sprite("Graphics\\key.png", false, Tiles.KeyToDoorTile);
+                _keyToDoorGfx.X = _map.KeyToDoor.X * Tiles.TileWidth;
+                _keyToDoorGfx.Y = _map.KeyToDoor.Y * Tiles.TileWidth;
+                stage.AddChild(_keyToDoorGfx);
+
+                // Sword rendering
+                _swordGfx = new Sprite("Graphics\\sword.png", false, Tiles.SwordTile);
+                _swordGfx.X = _map.Sword.X * Tiles.TileWidth;
+                _swordGfx.Y = _map.Sword.Y * Tiles.TileWidth;
+                stage.AddChild(_swordGfx);
+
+                // Door rendering
+                _doorGfx = new Sprite("Graphics\\door.png", false, Tiles.DoorTile);
+                _doorGfx.X = _map.Door.X * Tiles.TileWidth;
+                _doorGfx.Y = _map.Door.Y * Tiles.TileWidth;
+                stage.AddChild(_doorGfx);
+
+                // Stairs rendering
+                _stairsGfx = new Sprite("Graphics\\stairs.png", false, Tiles.StairsTile);
+                _stairsGfx.X = _map.Stairs.X * Tiles.TileWidth;
+                _stairsGfx.Y = _map.Stairs.Y * Tiles.TileWidth;
+                stage.AddChild(_stairsGfx);
+
+                // Open door rendering
+                _openDoorGfx = new Sprite("Graphics\\open_door.png", false, Tiles.DoorTile);
+                _openDoorGfx.X = _map.Door.X * Tiles.TileWidth;
+                _openDoorGfx.Y = _map.Door.Y * Tiles.TileWidth;
             }
 
-            // Ghost rendering
-            _ghostSpriteList = new List<Sprite>();
-            for (int i = 0; i < _map.Ghosts.Count; i++)
-            {
-                _ghostGfx = new Sprite("Graphics\\ghost.png", false, Tiles.GhostTile);
-                _ghostGfx.X = _map.Ghosts[i].X * Tiles.TileWidth;
-                _ghostGfx.Y = _map.Ghosts[i].Y * Tiles.TileWidth;
-                _ghostSpriteList.Add(_ghostGfx);
-                stage.AddChild(_ghostGfx);
-            }
-
-            // Dragon rendering
-            _dragonGfx = new Sprite("Graphics\\dragon.png", false, Tiles.DragonTile);
-            _dragonGfx.X = _map.Dragon.X * Tiles.TileWidth;
-            _dragonGfx.Y = _map.Dragon.Y * Tiles.TileWidth;
-            stage.AddChild(_dragonGfx);
-
-            // Dragon fire rendering
-            int rangeX = _map.Dragon.X;
-            int rangeY = _map.Dragon.Y;
-            int[] rangeArrX = { rangeX, rangeX, rangeX - 1, rangeX + 1 };
-            int[] rangeArrY = { rangeY - 1, rangeY - 2, rangeY - 2, rangeY - 2 };
-            _dragonFireList = new List<Sprite>();
-
-            for (int index = 0; index < rangeArrX.Length; index++)
-            {
-                _fireGfx = new Sprite("Graphics\\conjure_flame.png", false, Tiles.DragonTile);
-                _fireGfx.X = rangeArrX[index] * Tiles.TileWidth;
-                _fireGfx.Y = rangeArrY[index] * Tiles.TileWidth;
-                _dragonFireList.Add(_fireGfx);
-            }
-
-            // Key rendering
-            _keyToDoorGfx = new Sprite("Graphics\\key.png", false, Tiles.KeyToDoorTile);
-            _keyToDoorGfx.X = _map.KeyToDoor.X * Tiles.TileWidth;
-            _keyToDoorGfx.Y = _map.KeyToDoor.Y * Tiles.TileWidth;
-            stage.AddChild(_keyToDoorGfx);
-
-            //Sword rendering
-            _swordGfx = new Sprite("Graphics\\sword.png", false, Tiles.SwordTile);
-            _swordGfx.X = _map.Sword.X * Tiles.TileWidth;
-            _swordGfx.Y = _map.Sword.Y * Tiles.TileWidth;
-            stage.AddChild(_swordGfx);
-
-            //Door rendering
-            _doorGfx = new Sprite("Graphics\\door.png", false, Tiles.DoorTile);
-            _doorGfx.X = _map.Door.X * Tiles.TileWidth;
-            _doorGfx.Y = _map.Door.Y * Tiles.TileWidth;
-            stage.AddChild(_doorGfx);
-
-            // Open door rendering
-            _openDoorGfx = new Sprite("Graphics\\open_door.png", false, Tiles.DoorTile);
-            _openDoorGfx.X = _map.Door.X * Tiles.TileWidth;
-            _openDoorGfx.Y = _map.Door.Y * Tiles.TileWidth;
-
-            //Player rendering (first)
+            // Player rendering (first)
             _playerGfx = new Sprite("Graphics\\player.png", false, Tiles.PlayerTile);
             stage.AddChild(_playerGfx);
 
@@ -171,19 +183,19 @@ namespace Codecool.DungeonCrawl
         private void InventoryRender()
         {
             _inventoryList = new List<TextField>();
-                int itemCounter = 1;
-                foreach (KeyValuePair<string, int> invItem in _map.Player.Inventory.InventoryDict)
-                {
-                    string itemText = invItem.Key + ":" + invItem.Value.ToString();
-                    _inventoryTextField = new TextField(PerlinApp.FontRobotoMono.CreateFont(18), itemText, false);
-                    _inventoryTextField.HorizontalAlign = HorizontalAlignment.Right;
-                    _inventoryTextField.Width = 100;
-                    _inventoryTextField.Height = 25;
-                    _inventoryTextField.Y = _map.Height * Tiles.TileWidth - 25 * itemCounter;
-                    _inventoryTextField.X = _map.Width * Tiles.TileWidth - 100;
-                    itemCounter++;
-                    _inventoryList.Add(_inventoryTextField);
-                }
+            int itemCounter = 1;
+            foreach (KeyValuePair<string, int> invItem in _map.Player.Inventory.InventoryDict)
+            {
+                string itemText = invItem.Key + ":" + invItem.Value.ToString();
+                _inventoryTextField = new TextField(PerlinApp.FontRobotoMono.CreateFont(18), itemText, false);
+                _inventoryTextField.HorizontalAlign = HorizontalAlignment.Right;
+                _inventoryTextField.Width = 100;
+                _inventoryTextField.Height = 25;
+                _inventoryTextField.Y = _map.Height * Tiles.TileWidth - 25 * itemCounter;
+                _inventoryTextField.X = _map.Width * Tiles.TileWidth - 100;
+                itemCounter++;
+                _inventoryList.Add(_inventoryTextField);
+            }
 
             foreach (TextField item in _inventoryList)
             {
@@ -238,239 +250,288 @@ namespace Codecool.DungeonCrawl
         // this gets called every frame
         private void StageOnEnterFrameEvent(DisplayObject target, float elapsedtimesecs)
         {
-            Random rnd = new Random();
-            int randomY, randomX;
-
-            // process inputs
-            if (KeyboardInput.IsKeyPressedThisFrame(Key.W) || KeyboardInput.IsKeyPressedThisFrame(Key.Up))
+            if (MapFile == "map.txt")
             {
-                _map.Player.Move(0, -1);
-                _map.Player.Attack(0, -1);
-                if (_map.Dragon.Health > 0)
+                Random rnd = new Random();
+                int randomY, randomX;
+
+                // process inputs
+                if (KeyboardInput.IsKeyPressedThisFrame(Key.W) || KeyboardInput.IsKeyPressedThisFrame(Key.Up))
                 {
-                    if (_map.Dragon.DragonBreath(_map.Player))
+                    _map.Player.Move(0, -1);
+                    _map.Player.Attack(0, -1);
+                    if (_map.Dragon.Health > 0)
                     {
-                        foreach (Sprite fire in _dragonFireList)
+                        if (_map.Dragon.DragonBreath(_map.Player))
                         {
-                            PerlinApp.Stage.AddChild(fire);
+                            foreach (Sprite fire in _dragonFireList)
+                            {
+                                PerlinApp.Stage.AddChild(fire);
+                            }
+                        }
+                        else
+                        {
+                            foreach (Sprite fire in _dragonFireList)
+                            {
+                                PerlinApp.Stage.RemoveChild(fire);
+                            }
                         }
                     }
-                    else
+
+                    // Update skeleton position
+                    foreach (Skeleton skeleton in _map.Skeletons)
                     {
+                        randomY = rnd.Next(-1, 2);
+                        randomX = rnd.Next(-1, 2);
+                        skeleton.Move(randomX, randomY);
+                    }
+
+                    // Update ghost position
+                    foreach (Ghost ghost in _map.Ghosts)
+                    {
+                        randomY = rnd.Next(-1, 2);
+                        randomX = rnd.Next(-1, 2);
+                        ghost.Move(randomX, randomY);
+                    }
+                }
+
+                if (KeyboardInput.IsKeyPressedThisFrame(Key.S) || KeyboardInput.IsKeyPressedThisFrame(Key.Down))
+                {
+                    _map.Player.Move(0, 1);
+                    _map.Player.Attack(0, 1);
+                    _beforeBreathHp = _map.Player.Health;
+                    if (_map.Dragon.Health > 0)
+                    {
+                        if (_map.Dragon.DragonBreath(_map.Player))
+                        {
+                            foreach (Sprite fire in _dragonFireList)
+                            {
+                                PerlinApp.Stage.AddChild(fire);
+                            }
+                        }
+                        else
+                        {
+                            foreach (Sprite fire in _dragonFireList)
+                            {
+                                PerlinApp.Stage.RemoveChild(fire);
+                            }
+                        }
+                    }
+
+                    foreach (Skeleton skeleton in _map.Skeletons)
+                    {
+                        randomY = rnd.Next(-1, 2);
+                        randomX = rnd.Next(-1, 2);
+                        skeleton.Move(randomX, randomY);
+                    }
+
+                    foreach (Ghost ghost in _map.Ghosts)
+                    {
+                        randomY = rnd.Next(-1, 2);
+                        randomX = rnd.Next(-1, 2);
+                        ghost.Move(randomX, randomY);
+                    }
+                }
+
+                if (KeyboardInput.IsKeyPressedThisFrame(Key.A) || KeyboardInput.IsKeyPressedThisFrame(Key.Left))
+                {
+                    _map.Player.Move(-1, 0);
+                    _map.Player.Attack(-1, 0);
+                    _beforeBreathHp = _map.Player.Health;
+                    if (_map.Dragon.Health > 0)
+                    {
+                        if (_map.Dragon.DragonBreath(_map.Player))
+                        {
+                            foreach (Sprite fire in _dragonFireList)
+                            {
+                                PerlinApp.Stage.AddChild(fire);
+                            }
+                        }
+                        else
+                        {
+                            foreach (Sprite fire in _dragonFireList)
+                            {
+                                PerlinApp.Stage.RemoveChild(fire);
+                            }
+                        }
+                    }
+
+                    foreach (Skeleton skeleton in _map.Skeletons)
+                    {
+                        randomY = rnd.Next(-1, 2);
+                        randomX = rnd.Next(-1, 2);
+                        skeleton.Move(randomX, randomY);
+                    }
+
+                    foreach (Ghost ghost in _map.Ghosts)
+                    {
+                        randomY = rnd.Next(-1, 2);
+                        randomX = rnd.Next(-1, 2);
+                        ghost.Move(randomX, randomY);
+                    }
+                }
+
+                if (KeyboardInput.IsKeyPressedThisFrame(Key.D) || KeyboardInput.IsKeyPressedThisFrame(Key.Right))
+                {
+                    _map.Player.Move(1, 0);
+                    _map.Player.Attack(1, 0);
+                    _beforeBreathHp = _map.Player.Health;
+                    if (_map.Dragon.Health > 0)
+                    {
+                        if (_map.Dragon.DragonBreath(_map.Player))
+                        {
+                            foreach (Sprite fire in _dragonFireList)
+                            {
+                                PerlinApp.Stage.AddChild(fire);
+                            }
+                        }
+                        else
+                        {
+                            foreach (Sprite fire in _dragonFireList)
+                            {
+                                PerlinApp.Stage.RemoveChild(fire);
+                            }
+                        }
+                    }
+
+                    foreach (Skeleton skeleton in _map.Skeletons)
+                    {
+                        randomY = rnd.Next(-1, 2);
+                        randomX = rnd.Next(-1, 2);
+                        skeleton.Move(randomX, randomY);
+                    }
+
+                    foreach (Ghost ghost in _map.Ghosts)
+                    {
+                        randomY = rnd.Next(-1, 2);
+                        randomX = rnd.Next(-1, 2);
+                        ghost.Move(randomX, randomY);
+                    }
+                }
+
+                // render changes
+                _playerGfx.X = _map.Player.X * Tiles.TileWidth;
+                _playerGfx.Y = _map.Player.Y * Tiles.TileWidth;
+                _healthTextField.Text = "HP: " + _map.Player.Health.ToString();
+
+                if (_map.Player.X == _map.KeyToDoor.X && _map.Player.Y == _map.KeyToDoor.Y && _map.KeyToDoor.Cell.Item != null)
+                {
+                    //TODO: and if nacisnieto przycisk
+
+                    PerlinApp.Stage.RemoveChild(_keyToDoorGfx);
+                    _map.Player.Inventory.AddToInventory("keys");
+                    _map.KeyToDoor.PickUp();
+
+                    ClearInventory();
+                    InventoryRender();
+                }
+
+                if (_map.Player.X == _map.Sword.X && _map.Player.Y == _map.Sword.Y && _map.Sword.Cell.Item != null)
+                {
+                    PerlinApp.Stage.RemoveChild(_swordGfx);
+
+                    // TODO: and if nacisnieto przycisk
+                    _map.Player.Inventory.AddToInventory("swords");
+                    _map.Sword.PickUp();
+
+                    ClearInventory();
+                    InventoryRender();
+                }
+
+                if (_map.Player.X == _map.Door.X && _map.Player.Y == _map.Door.Y && _map.Door.Used)
+                {
+                    ClearInventory();
+                    InventoryRender();
+                    PerlinApp.Stage.RemoveChild(_doorGfx);
+                    PerlinApp.Stage.AddChild(_openDoorGfx);
+                }
+
+                if (_map.Player.X == _map.Stairs.X && _map.Player.Y == _map.Stairs.Y)
+                {
+                    MapFile = "map2.txt";
+                    PerlinApp.Stage.RemoveAllChildren();
+                    _map = MapLoader.LoadMap(MapFile);
+                    PerlinApp.Stage.EnterFrameEvent -= StageOnEnterFrameEvent;
+                    OnStart();
+                }
+
+                int countSkeleton = 0;
+                foreach (Skeleton skeleton in _map.Skeletons)
+                {
+                    _skeletonsSpriteList[countSkeleton].X = skeleton.X * Tiles.TileWidth;
+                    _skeletonsSpriteList[countSkeleton].Y = skeleton.Y * Tiles.TileWidth;
+
+                    if (skeleton.Health == 0)
+                    {
+                        PerlinApp.Stage.RemoveChild(_skeletonsSpriteList[countSkeleton]);
+                        skeleton.Cell.Actor = null;
+                    }
+
+                    countSkeleton++;
+                }
+
+                // Render ghost changes
+                int countGhost = 0;
+                foreach (Ghost ghost in _map.Ghosts)
+                {
+                    _ghostSpriteList[countGhost].X = ghost.X * Tiles.TileWidth;
+                    _ghostSpriteList[countGhost].Y = ghost.Y * Tiles.TileWidth;
+
+                    if (ghost.Health == 0)
+                    {
+                        PerlinApp.Stage.RemoveChild(_ghostSpriteList[countGhost]);
+                        ghost.Cell.Actor = null;
+                    }
+                }
+
+                // Render dragon changes
+                if (MapFile == "map.txt")
+                {
+                    if (_map.Dragon.Health == 0)
+                    {
+                        PerlinApp.Stage.RemoveChild(_dragonGfx);
                         foreach (Sprite fire in _dragonFireList)
                         {
                             PerlinApp.Stage.RemoveChild(fire);
                         }
+
+                        _map.Dragon.Cell.Actor = null;
                     }
                 }
-
-                // Update skeleton position
-                foreach (Skeleton skeleton in _map.Skeletons)
-                {
-                    randomY = rnd.Next(-1, 2);
-                    randomX = rnd.Next(-1, 2);
-                    skeleton.Move(randomX, randomY);
-                }
-
-                // Update ghost position
-                foreach (Ghost ghost in _map.Ghosts)
-                {
-                    randomY = rnd.Next(-1, 2);
-                    randomX = rnd.Next(-1, 2);
-                    ghost.Move(randomX, randomY);
-                }
             }
 
-            if (KeyboardInput.IsKeyPressedThisFrame(Key.S) || KeyboardInput.IsKeyPressedThisFrame(Key.Down))
+            // second map
+            if (MapFile == "map2.txt")
             {
-                _map.Player.Move(0, 1);
-                _map.Player.Attack(0, 1);
-                _beforeBreathHp = _map.Player.Health;
-                if (_map.Dragon.Health > 0)
+                // process inputs
+                if (KeyboardInput.IsKeyPressedThisFrame(Key.W) || KeyboardInput.IsKeyPressedThisFrame(Key.Up))
                 {
-                    if (_map.Dragon.DragonBreath(_map.Player))
-                    {
-                        foreach (Sprite fire in _dragonFireList)
-                        {
-                            PerlinApp.Stage.AddChild(fire);
-                        }
-                    }
-                    else
-                    {
-                        foreach (Sprite fire in _dragonFireList)
-                        {
-                            PerlinApp.Stage.RemoveChild(fire);
-                        }
-                    }
+                    _map.Player.Move(0, -1);
+                    _map.Player.Attack(0, -1);
                 }
 
-                foreach (Skeleton skeleton in _map.Skeletons)
+                if (KeyboardInput.IsKeyPressedThisFrame(Key.S) || KeyboardInput.IsKeyPressedThisFrame(Key.Down))
                 {
-                    randomY = rnd.Next(-1, 2);
-                    randomX = rnd.Next(-1, 2);
-                    skeleton.Move(randomX, randomY);
+                    _map.Player.Move(0, 1);
+                    _map.Player.Attack(0, 1);
                 }
 
-                foreach (Ghost ghost in _map.Ghosts)
+                if (KeyboardInput.IsKeyPressedThisFrame(Key.A) || KeyboardInput.IsKeyPressedThisFrame(Key.Left))
                 {
-                    randomY = rnd.Next(-1, 2);
-                    randomX = rnd.Next(-1, 2);
-                    ghost.Move(randomX, randomY);
-                }
-            }
-
-            if (KeyboardInput.IsKeyPressedThisFrame(Key.A) || KeyboardInput.IsKeyPressedThisFrame(Key.Left))
-            {
-                _map.Player.Move(-1, 0);
-                _map.Player.Attack(-1, 0);
-                _beforeBreathHp = _map.Player.Health;
-                if (_map.Dragon.Health > 0)
-                {
-                    if (_map.Dragon.DragonBreath(_map.Player))
-                    {
-                        foreach (Sprite fire in _dragonFireList)
-                        {
-                            PerlinApp.Stage.AddChild(fire);
-                        }
-                    }
-                    else
-                    {
-                        foreach (Sprite fire in _dragonFireList)
-                        {
-                            PerlinApp.Stage.RemoveChild(fire);
-                        }
-                    }
+                    _map.Player.Move(-1, 0);
+                    _map.Player.Attack(-1, 0);
                 }
 
-                foreach (Skeleton skeleton in _map.Skeletons)
+                if (KeyboardInput.IsKeyPressedThisFrame(Key.D) || KeyboardInput.IsKeyPressedThisFrame(Key.Right))
                 {
-                    randomY = rnd.Next(-1, 2);
-                    randomX = rnd.Next(-1, 2);
-                    skeleton.Move(randomX, randomY);
+                    _map.Player.Move(1, 0);
+                    _map.Player.Attack(1, 0);
                 }
 
-                foreach (Ghost ghost in _map.Ghosts)
-                {
-                    randomY = rnd.Next(-1, 2);
-                    randomX = rnd.Next(-1, 2);
-                    ghost.Move(randomX, randomY);
-                }
-            }
-
-            if (KeyboardInput.IsKeyPressedThisFrame(Key.D) || KeyboardInput.IsKeyPressedThisFrame(Key.Right))
-            {
-                _map.Player.Move(1, 0);
-                _map.Player.Attack(1, 0);
-                _beforeBreathHp = _map.Player.Health;
-                if (_map.Dragon.Health > 0)
-                {
-                    if (_map.Dragon.DragonBreath(_map.Player))
-                    {
-                        foreach (Sprite fire in _dragonFireList)
-                        {
-                            PerlinApp.Stage.AddChild(fire);
-                        }
-                    }
-                    else
-                    {
-                        foreach (Sprite fire in _dragonFireList)
-                        {
-                            PerlinApp.Stage.RemoveChild(fire);
-                        }
-                    }
-                }
-
-                foreach (Skeleton skeleton in _map.Skeletons)
-                {
-                    randomY = rnd.Next(-1, 2);
-                    randomX = rnd.Next(-1, 2);
-                    skeleton.Move(randomX, randomY);
-                }
-
-                foreach (Ghost ghost in _map.Ghosts)
-                {
-                    randomY = rnd.Next(-1, 2);
-                    randomX = rnd.Next(-1, 2);
-                    ghost.Move(randomX, randomY);
-                }
-            }
-
-            // render changes
-            _playerGfx.X = _map.Player.X * Tiles.TileWidth;
-            _playerGfx.Y = _map.Player.Y * Tiles.TileWidth;
-            _healthTextField.Text = "HP: " + _map.Player.Health.ToString();
-
-            if (_map.Player.X == _map.KeyToDoor.X && _map.Player.Y == _map.KeyToDoor.Y && _map.KeyToDoor.Cell.Item != null)
-            {
-                //TODO: and if nacisnieto przycisk
-
-                PerlinApp.Stage.RemoveChild(_keyToDoorGfx);
-                _map.Player.Inventory.AddToInventory("keys");
-                _map.KeyToDoor.PickUp();
-
-                ClearInventory();
-                InventoryRender();
-            }
-
-            if (_map.Player.X == _map.Sword.X && _map.Player.Y == _map.Sword.Y && _map.Sword.Cell.Item != null)
-            {
-                PerlinApp.Stage.RemoveChild(_swordGfx);
-
-                // TODO: and if nacisnieto przycisk
-                _map.Player.Inventory.AddToInventory("swords");
-                _map.Sword.PickUp();
-
-                ClearInventory();
-                InventoryRender();
-            }
-
-            if (_map.Player.X == _map.Door.X && _map.Player.Y == _map.Door.Y && _map.Door.Used)
-            {
-                ClearInventory();
-                InventoryRender();
-                PerlinApp.Stage.RemoveChild(_doorGfx);
-                PerlinApp.Stage.AddChild(_openDoorGfx);
-            }
-
-            int countSkeleton = 0;
-            foreach (Skeleton skeleton in _map.Skeletons)
-            {
-                _skeletonsSpriteList[countSkeleton].X = skeleton.X * Tiles.TileWidth;
-                _skeletonsSpriteList[countSkeleton].Y = skeleton.Y * Tiles.TileWidth;
-
-                if (skeleton.Health == 0)
-                {
-                    PerlinApp.Stage.RemoveChild(_skeletonsSpriteList[countSkeleton]);
-                    skeleton.Cell.Actor = null;
-                }
-
-                countSkeleton++;
-            }
-
-            // Render ghost changes
-            int countGhost = 0;
-            foreach (Ghost ghost in _map.Ghosts)
-            {
-                _ghostSpriteList[countGhost].X = ghost.X * Tiles.TileWidth;
-                _ghostSpriteList[countGhost].Y = ghost.Y * Tiles.TileWidth;
-
-                if (ghost.Health == 0)
-                {
-                    PerlinApp.Stage.RemoveChild(_ghostSpriteList[countGhost]);
-                    ghost.Cell.Actor = null;
-                }
-            }
-
-            // Render dragon changes
-            if (_map.Dragon.Health == 0)
-            {
-                PerlinApp.Stage.RemoveChild(_dragonGfx);
-                foreach (Sprite fire in _dragonFireList)
-                {
-                    PerlinApp.Stage.RemoveChild(fire);
-                }
-
-                _map.Dragon.Cell.Actor = null;
+                // render changes
+                _playerGfx.X = _map.Player.X * Tiles.TileWidth;
+                _playerGfx.Y = _map.Player.Y * Tiles.TileWidth;
+                _healthTextField.Text = "HP: " + _map.Player.Health.ToString();
             }
         }
     }

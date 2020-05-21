@@ -50,6 +50,11 @@ namespace Codecool.DungeonCrawl
         public static readonly Rectangle DoorOpenedTile = CreateTile(1, 1);
 
         /// <summary>
+        /// Coordinates of stairs graphic.
+        /// </summary>
+        public static readonly Rectangle StairsTile = CreateTile(1, 1);
+
+        /// <summary>
         /// Coordinates of the dragon graphic.
         /// </summary>
         public static readonly Rectangle DragonTile = CreateTile(1, 1);

@@ -16,9 +16,9 @@ namespace Codecool.DungeonCrawl.Logic
         /// </summary>
         /// <returns>The loaded map</returns>
         /// <exception cref="InvalidDataException">The map has unrecognized character(s)</exception>
-        public static GameMap LoadMap()
+        public static GameMap LoadMap(string mapFile)
         {
-            var lines = File.ReadAllLines("map.txt");
+            var lines = File.ReadAllLines(mapFile);
             var dimensions = lines[0].Split(" ");
             var width = int.Parse(dimensions[0]);
             var height = int.Parse(dimensions[1]);
@@ -79,6 +79,10 @@ namespace Codecool.DungeonCrawl.Logic
                             case 'D':
                                 cell.Type = CellType.Floor;
                                 map.Dragon = new Dragon(cell);
+                                break;
+                            case 'S':
+                                cell.Type = CellType.Floor;
+                                map.Stairs = new Stairs(cell);
                                 break;
                             default:
                                 throw new InvalidDataException($"Unrecognized character: '{line[x]}'");
