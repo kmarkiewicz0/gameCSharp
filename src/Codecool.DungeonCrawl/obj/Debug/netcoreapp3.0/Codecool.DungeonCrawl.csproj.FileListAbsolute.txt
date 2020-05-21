@@ -118,3 +118,4 @@ D:\OOP\2 TW najnowsze\gameCSharp\src\Codecool.DungeonCrawl\bin\Debug\netcoreapp3
 D:\OOP\2 TW najnowsze\gameCSharp\src\Codecool.DungeonCrawl\bin\Debug\netcoreapp3.0\Graphics\sword.png
 D:\OOP\2 TW najnowsze\gameCSharp\src\Codecool.DungeonCrawl\bin\Debug\netcoreapp3.0\Graphics\door.png
 D:\OOP\2 TW najnowsze\gameCSharp\src\Codecool.DungeonCrawl\bin\Debug\netcoreapp3.0\Graphics\open_door.png
+D:\OOP\2 TW najnowsze\gameCSharp\src\Codecool.DungeonCrawl\bin\Debug\netcoreapp3.0\Graphics\ghost.png

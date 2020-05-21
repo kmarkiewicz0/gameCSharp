@@ -84,7 +84,7 @@ namespace Codecool.DungeonCrawl
             _ghostSpriteList = new List<Sprite>();
             for (int i = 0; i < _map.Ghosts.Count; i++)
             {
-                _ghostGfx = new Sprite("tiles2.png", false, Tiles.GhostTile);
+                _ghostGfx = new Sprite("Graphics\\ghost.png", false, Tiles.GhostTile);
                 _ghostGfx.X = _map.Ghosts[i].X * Tiles.TileWidth;
                 _ghostGfx.Y = _map.Ghosts[i].Y * Tiles.TileWidth;
                 _ghostSpriteList.Add(_ghostGfx);

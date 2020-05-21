@@ -28,7 +28,7 @@ namespace Codecool.DungeonCrawl
         /// <summary>
         /// Coordinates of the ghost graphic.
         /// </summary>
-        public static readonly Rectangle GhostTile = CreateTile(27, 6);
+        public static readonly Rectangle GhostTile = CreateTile(1, 1);
 
         /// <summary>
         /// Coordinates of the key to thr door graphic.
