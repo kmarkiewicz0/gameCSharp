@@ -9,6 +9,7 @@ using Codecool.DungeonCrawl.Logic.Items;
 using Codecool.DungeonCrawl.Logic.Items.Inventory;
 using Perlin;
 using Perlin.Display;
+using SharpDX.Direct3D11;
 using SixLabors.Fonts;
 using Veldrid;
 
@@ -31,12 +32,19 @@ namespace Codecool.DungeonCrawl
         private Sprite _doorGfx;
         private List<Sprite> _skeletonsSpriteList;
 
+        public static TextField GameMessage { get; set; }
+
         /// <summary>
         /// Entry point
         /// </summary>
         public static void Main()
         {
             new Program();
+        }
+
+        public static void RenderMessage(string message)
+        {
+            GameMessage.Text = message;
         }
 
         private Program()
@@ -94,14 +102,24 @@ namespace Codecool.DungeonCrawl
             // health textField
             string healthDisplayText = "HP: " + _map.Player.Health.ToString();
             _healthTextField = new TextField(
-                PerlinApp.FontRobotoMono.CreateFont(14),
+                PerlinApp.FontRobotoMono.CreateFont(18),
                 healthDisplayText,
                 false);
             _healthTextField.HorizontalAlign = HorizontalAlignment.Right;
             _healthTextField.Width = 100;
-            _healthTextField.Height = 20;
+            _healthTextField.Height = 30;
             _healthTextField.X = _map.Width * Tiles.TileWidth - 100;
             stage.AddChild(_healthTextField);
+
+            // game message render
+            string message = _map.Player.Message;
+            GameMessage = new TextField(PerlinApp.FontRobotoMono.CreateFont(18), message, false);
+            GameMessage.Width = 220;
+            GameMessage.Height = 120;
+            GameMessage.HorizontalAlign = HorizontalAlignment.Right;
+            GameMessage.X = _map.Width * Tiles.TileWidth - 230;
+            GameMessage.Y = (_map.Height * Tiles.TileWidth) / 2;
+            stage.AddChild(GameMessage);
 
             InventoryRender();
         }
@@ -113,11 +131,11 @@ namespace Codecool.DungeonCrawl
                 foreach (KeyValuePair<string, int> invItem in _map.Player.Inventory.InventoryDict)
                 {
                     string itemText = invItem.Key + ":" + invItem.Value.ToString();
-                    _inventoryTextField = new TextField(PerlinApp.FontRobotoMono.CreateFont(14), itemText, false);
+                    _inventoryTextField = new TextField(PerlinApp.FontRobotoMono.CreateFont(18), itemText, false);
                     _inventoryTextField.HorizontalAlign = HorizontalAlignment.Right;
                     _inventoryTextField.Width = 100;
-                    _inventoryTextField.Height = 20;
-                    _inventoryTextField.Y = _map.Height * Tiles.TileWidth - 20 * itemCounter;
+                    _inventoryTextField.Height = 25;
+                    _inventoryTextField.Y = _map.Height * Tiles.TileWidth - 25 * itemCounter;
                     _inventoryTextField.X = _map.Width * Tiles.TileWidth - 100;
                     itemCounter++;
                     _inventoryList.Add(_inventoryTextField);
