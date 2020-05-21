@@ -472,6 +472,13 @@ namespace Codecool.DungeonCrawl
 
                 _map.Dragon.Cell.Actor = null;
             }
+
+            if (_map.Player.Health <= 0)
+            {
+                PerlinApp.Stage.RemoveAllChildren();
+                PerlinApp.Stage.EnterFrameEvent -= StageOnEnterFrameEvent;
+                Console.WriteLine("Game over. You are dead.");
+            }
         }
     }
 }
