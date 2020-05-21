@@ -10,17 +10,51 @@
     <OldToolsVersion>Current</OldToolsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Graphics\door.png" />
+    <None Remove="Graphics\key.png" />
+    <None Remove="Graphics\open_door.png" />
+    <None Remove="Graphics\player.png" />
+    <None Remove="Graphics\sword.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Graphics\door.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\empty.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="..\..\data\map.txt">
       <Link>map.txt</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\data\tiles.png">
-      <Link>tiles.png</Link>
+    <Content Include="Graphics\floor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\key.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\open_door.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\skeleton_humanoid_small.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\sword.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\wall.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Matyasf.Perlin" Version="1.0.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Graphics\player.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

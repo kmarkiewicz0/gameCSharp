@@ -17,40 +17,41 @@ namespace Codecool.DungeonCrawl
         /// <summary>
         /// Coordinates of the player graphic.
         /// </summary>
-        public static readonly Rectangle PlayerTile = CreateTile(27, 0);
+        public static readonly Rectangle PlayerTile = CreateTile(1, 1);
 
         /// <summary>
         /// Coordinates of the skeleton graphic.
         /// </summary>
-        public static readonly Rectangle SkeletonTile = CreateTile(29, 6);
+        // public static readonly Rectangle SkeletonTile = CreateTile(29, 6);
+        public static readonly Rectangle SkeletonTile = CreateTile(1, 1);
 
         /// <summary>
         /// Coordinates of the key to thr door graphic.
         /// </summary>
-        public static readonly Rectangle KeyToDoorTile = CreateTile(18, 23);
+        public static readonly Rectangle KeyToDoorTile = CreateTile(1, 1);
 
         /// <summary>
         /// Coordinates of sword graphic.
         /// </summary>
-        public static readonly Rectangle SwordTile = CreateTile(4, 30);
+        public static readonly Rectangle SwordTile = CreateTile(1, 1);
 
         /// <summary>
         /// Coordinates of sword graphic.
         /// </summary>
-        public static readonly Rectangle DoorTile = CreateTile(13, 11);
+        public static readonly Rectangle DoorTile = CreateTile(1, 1);
 
         /// <summary>
         /// Coordinates of sword graphic.
         /// </summary>
-        public static readonly Rectangle DoorOpenedTile = CreateTile(12, 11);
+        public static readonly Rectangle DoorOpenedTile = CreateTile(1, 1);
 
         private static readonly Dictionary<string, Rectangle> TileMap = new Dictionary<string, Rectangle>();
 
         static Tiles()
         {
             TileMap["empty"] = CreateTile(0, 0);
-            TileMap["wall"] = CreateTile(10, 17);
-            TileMap["floor"] = CreateTile(2, 0);
+            TileMap["wall"] = CreateTile(0, 0);
+            TileMap["floor"] = CreateTile(0, 0);
         }
 
         /// <summary>

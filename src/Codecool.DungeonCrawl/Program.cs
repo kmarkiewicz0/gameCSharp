@@ -26,6 +26,7 @@ namespace Codecool.DungeonCrawl
         private Sprite _mapContainer;
         private Sprite _playerGfx;
         private Sprite _keyToDoorGfx;
+        private Sprite _openDoorGfx;
         private Sprite _swordGfx;
         private Sprite _skeletonGfx;
         private Sprite _doorGfx;
@@ -62,7 +63,7 @@ namespace Codecool.DungeonCrawl
             _skeletonsSpriteList = new List<Sprite>();
             for (int i = 0; i < _map.Skeletons.Count; i++)
             {
-                _skeletonGfx = new Sprite("tiles2.png", false, Tiles.SkeletonTile);
+                _skeletonGfx = new Sprite("Graphics\\skeleton_humanoid_small.png", false, Tiles.SkeletonTile);
                 _skeletonGfx.X = _map.Skeletons[i].X * Tiles.TileWidth;
                 _skeletonGfx.Y = _map.Skeletons[i].Y * Tiles.TileWidth;
                 _skeletonsSpriteList.Add(_skeletonGfx);
@@ -70,25 +71,30 @@ namespace Codecool.DungeonCrawl
             }
 
             // Key rendering
-            _keyToDoorGfx = new Sprite("tiles2.png", false, Tiles.KeyToDoorTile);
+            _keyToDoorGfx = new Sprite("Graphics\\key.png", false, Tiles.KeyToDoorTile);
             _keyToDoorGfx.X = _map.KeyToDoor.X * Tiles.TileWidth;
             _keyToDoorGfx.Y = _map.KeyToDoor.Y * Tiles.TileWidth;
             stage.AddChild(_keyToDoorGfx);
 
             //Sword rendering
-            _swordGfx = new Sprite("tiles2.png", false, Tiles.SwordTile);
+            _swordGfx = new Sprite("Graphics\\sword.png", false, Tiles.SwordTile);
             _swordGfx.X = _map.Sword.X * Tiles.TileWidth;
             _swordGfx.Y = _map.Sword.Y * Tiles.TileWidth;
             stage.AddChild(_swordGfx);
 
             //Door rendering
-            _doorGfx = new Sprite("tiles2.png", false, Tiles.DoorTile);
+            _doorGfx = new Sprite("Graphics\\door.png", false, Tiles.DoorTile);
             _doorGfx.X = _map.Door.X * Tiles.TileWidth;
             _doorGfx.Y = _map.Door.Y * Tiles.TileWidth;
             stage.AddChild(_doorGfx);
 
+            // Open door rendering
+            _openDoorGfx = new Sprite("Graphics\\open_door.png", false, Tiles.DoorTile);
+            _openDoorGfx.X = _map.Door.X * Tiles.TileWidth;
+            _openDoorGfx.Y = _map.Door.Y * Tiles.TileWidth;
+
             //Player rendering (first)
-            _playerGfx = new Sprite("tiles2.png", false, Tiles.PlayerTile);
+            _playerGfx = new Sprite("Graphics\\player.png", false, Tiles.PlayerTile);
             stage.AddChild(_playerGfx);
 
             // health textField
@@ -147,11 +153,28 @@ namespace Codecool.DungeonCrawl
                     var cell = _map.GetCell(x, y);
                     var tile = Tiles.GetMapTile(cell);
 
-                    // tiles are 16x16 pixels
-                    var sp = new Sprite("tiles2.png", false, tile);
-                    sp.X = x * Tiles.TileWidth;
-                    sp.Y = y * Tiles.TileWidth;
-                    _mapContainer.AddChild(sp);
+                    // tiles are 32x32 pixels
+                    if (cell.Tilename == "Floor")
+                    {
+                        var sp = new Sprite("Graphics\\floor.png", false, tile);
+                        sp.X = x * Tiles.TileWidth;
+                        sp.Y = y * Tiles.TileWidth;
+                        _mapContainer.AddChild(sp);
+                    }
+                    else if (cell.Tilename == "Wall")
+                    {
+                        var sp = new Sprite("Graphics\\wall.png", false, tile);
+                        sp.X = x * Tiles.TileWidth;
+                        sp.Y = y * Tiles.TileWidth;
+                        _mapContainer.AddChild(sp);
+                    }
+                    else if (cell.Tilename == "Empty")
+                    {
+                        var sp = new Sprite("Graphics\\empty.png", false, tile);
+                        sp.X = x * Tiles.TileWidth;
+                        sp.Y = y * Tiles.TileWidth;
+                        _mapContainer.AddChild(sp);
+                    }
                 }
             }
         }
@@ -238,6 +261,12 @@ namespace Codecool.DungeonCrawl
 
                 ClearInventory();
                 InventoryRender();
+            }
+
+            if (_map.Player.X == _map.Door.X && _map.Player.Y == _map.Door.Y && _map.Door.Used)
+            {
+                PerlinApp.Stage.RemoveChild(_doorGfx);
+                PerlinApp.Stage.AddChild(_openDoorGfx);
             }
 
             int countSkeleton = 0;
