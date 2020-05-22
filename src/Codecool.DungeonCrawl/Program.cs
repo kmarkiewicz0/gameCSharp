@@ -594,6 +594,7 @@ namespace Codecool.DungeonCrawl
             {
                 _ghostSpriteListSecond[countGhostSec].X = ghost.X * Tiles.TileWidth;
                 _ghostSpriteListSecond[countGhostSec].Y = ghost.Y * Tiles.TileWidth;
+                countGhostSec++;
             }
         }
     }
